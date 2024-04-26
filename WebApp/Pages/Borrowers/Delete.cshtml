@@ -1,0 +1,66 @@
+﻿@page "{id}"
+@model WebApp.Pages.Borrowers.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+    string placeholderImageFileName = "no_image.png";
+}
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Borrowers</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-page="/Index">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a asp-page="Index">Borrowers</a></li>
+                    <li class="breadcrumb-item ">Delete</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<div class="content">
+    <div class="container-fluid">
+        <div class="row py-2">
+            <div class="col-md-8 mx-auto">
+                <div class="card card-primary card-outline mb-3">
+                    <div class="card-header bg-white">
+                        <h2 class="card-title h4 fw-lighter">Delete @(Model.BorrowerDeleteViewModel.Borrower.FirstName) @(Model.BorrowerDeleteViewModel.Borrower.LastName)?</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-2 d-flex justify-content-center align-items-center">
+                                <img src="~/images/borrowers/@(Model.BorrowerDeleteViewModel.Borrower.DisplayPictureURL ?? placeholderImageFileName)" alt="" class="img-fluid img-thumbnail" asp-append-version="true" />
+                            </div>
+                            <div class="col-md-3">
+                                <small class="fs-6 fw-light">@Html.DisplayNameFor(model => model.BorrowerDeleteViewModel.Borrower.DisplayName)</small>
+                                <p class="fs-6 fw-bold">@Model.BorrowerDeleteViewModel.Borrower.DisplayName</p>
+                            </div>
+                            <div class="col-md-7">
+                                <h3 class="h6 text-danger">Warning</h3>
+                                <p>Deleting a borrower is an irreversible action. Once a borrower is deleted all the loans and installment information related to the borrower are deleted too. <em class="fw-bold text-danger">THIS ACTION IS IRREVERSIBLE</em></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white">
+                        <form method="post">
+                            <input type="hidden" asp-for="BorrowerDeleteViewModel.Borrower.Id" />
+                            <div class="d-flex btn-group">
+                                <input type="submit" value="Delete" class="btn btn-danger" />
+                                <a asp-page="Details" asp-route-ID="@Model.BorrowerDeleteViewModel.Borrower.Id" class="btn btn-outline-primary">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- /.content -->

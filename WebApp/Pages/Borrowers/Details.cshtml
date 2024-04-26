@@ -1,0 +1,383 @@
+﻿@page "{id}"
+@using WebApp.Models
+@model WebApp.Pages.Borrowers.DetailsModel
+
+@{
+    ViewData["Title"] = "Borrower";
+    bool borrowerHasLoans = Model.BorrowerDetailsViewModel.Borrower.Loans.Count > 0 && Model.BorrowerDetailsViewModel.Borrower.Loans is not null;
+    bool borrowerHasInstallments = Model.BorrowerDetailsViewModel.Borrower.Installments.Count > 0 && Model.BorrowerDetailsViewModel.Borrower.Installments is not null;
+    bool borrowerHasDocuments = Model.BorrowerDetailsViewModel.Borrower.IdentificationDocumentURL is not null;
+    bool borrowerHasAnalyses = Model.BorrowerDetailsViewModel.Borrower.CreditAnalyses is not null && Model.BorrowerDetailsViewModel.Borrower.CreditAnalyses.Count > 0;
+    string placeholderImageFileName = "no_image.png";
+}
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Borrowers</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-page="/Index">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a asp-page="Index">Borrowers</a></li>
+                    <li class="breadcrumb-item active">Manage</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.Content Header -->
+<!-- Main content -->
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <ul class="list-group mb-3">
+                    <li class="list-group-item">
+                        <a asp-page="Index" class="text-decoration-none fs-6 fw-light">Back to borrowers</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="#bio" class="text-decoration-none fs-6 fw-light">Bio</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="#contact" class="text-decoration-none fs-6 fw-light">Contact</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="#summary" class="text-decoration-none fs-6 fw-light">Summary</a>
+                    </li>
+                </ul>
+                <ul class="list-group mb-3">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="badge bg-success">@Model.BorrowerDetailsViewModel.Borrower.NumberOfLoans</span>
+                            Loans
+                        </div>
+                        <div class="fw-bold">@Model.BorrowerDetailsViewModel.Borrower.AmountInLoans.ToString("C")</div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="badge bg-success">@Model.BorrowerDetailsViewModel.Borrower.NumberOfInstallments</span>
+                            Installments
+                        </div>
+                        <div class="fw-bold">@Model.BorrowerDetailsViewModel.Borrower.AmountInInstallments.ToString("C")</div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="badge bg-danger">@Model.BorrowerDetailsViewModel.Borrower.NumberOfLoansOutstanding</span>
+                            Loans outstanding
+                        </div>
+                        <div class="fw-bold">@Model.BorrowerDetailsViewModel.Borrower.AmountInLoansOutstanding.ToString("C")</div>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="badge bg-danger">@Model.BorrowerDetailsViewModel.Borrower.NumberOfInstallmentsOustanding</span>
+                            Installments oustanding
+                        </div>
+                        <div class="fw-bold">@Model.BorrowerDetailsViewModel.Borrower.AmountInInstallmentsOutstanding.ToString("C")</div>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-8">
+                <div class="card card-primary card-outline mb-3">
+                    <div class="card-header bg-white">
+                        <nav>
+                            <div class="nav nav-tabs nav-justified card-header-tabs" id="nav-tab" role="tablist">
+                                <button class="nav-link  active fs-6 fw-light" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">
+                                    @(Model.BorrowerDetailsViewModel.Borrower.FirstName) @(Model.BorrowerDetailsViewModel.Borrower.LastName)'s details
+                                </button>
+                                <button class="nav-link fs-6 fw-light" id="nav-loans-tab" data-bs-toggle="tab" data-bs-target="#nav-loans" type="button" role="tab" aria-controls="nav-loans" aria-selected="false">Loans</button>
+                                <button class="nav-link fs-6 fw-light" id="nav-installments-tab" data-bs-toggle="tab" data-bs-target="#nav-installments" type="button" role="tab" aria-controls="nav-installments" aria-selected="false">Installments</button>
+                                <button class="nav-link fs-6 fw-light" id="nav-analysis-tab" data-bs-toggle="tab" data-bs-target="#nav-analysis" type="button" role="tab" aria-controls="nav-analysis" aria-selected="false">Analysis</button>
+                                <button class="nav-link fs-6 fw-light" id="nav-documents-tab" data-bs-toggle="tab" data-bs-target="#nav-documents" type="button" role="tab" aria-controls="nav-documents" aria-selected="false">Documents</button>
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                <div class="row gap-3">
+                                    <div id="bio" class="col-12">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <img src="~/images/borrowers/@(Model.BorrowerDetailsViewModel.Borrower.DisplayPictureURL ?? placeholderImageFileName)" alt="" class="img-fluid img-thumbnail" asp-append-version="true" width="150" />
+                                            </div>
+                                            <div class="col-md-9">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        <span>@Html.DisplayNameFor(model => model.BorrowerDetailsViewModel.Borrower.FirstName)</span>
+                                                        <span class="fw-bold">@Model.BorrowerDetailsViewModel.Borrower.FirstName</span>
+                                                    </li>
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        <span>@Html.DisplayNameFor(model => model.BorrowerDetailsViewModel.Borrower.LastName)</span>
+                                                        <span class="fw-bold">@Model.BorrowerDetailsViewModel.Borrower.LastName</span>
+                                                    </li>
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        <span>@Html.DisplayNameFor(model => model.BorrowerDetailsViewModel.Borrower.IdentificationDocumentType)</span>
+                                                        <span class="fw-bold">@Model.BorrowerDetailsViewModel.Borrower.IdentificationDocumentType</span>
+                                                    </li>
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        <span>@Html.DisplayNameFor(model => model.BorrowerDetailsViewModel.Borrower.IdentificationDocumentNumber)</span>
+                                                        <span class="fw-bold">@Model.BorrowerDetailsViewModel.Borrower.IdentificationDocumentNumber</span>
+                                                    </li>
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        <span>@Html.DisplayNameFor(model => model.BorrowerDetailsViewModel.Borrower.Occupation)</span>
+                                                        <span class="fw-bold">@Model.BorrowerDetailsViewModel.Borrower.Occupation</span>
+                                                    </li>
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        <span>@Html.DisplayNameFor(model => model.BorrowerDetailsViewModel.Borrower.Company)</span>
+                                                        <span class="fw-bold">@Model.BorrowerDetailsViewModel.Borrower.Company</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="contact" class="col-12">
+                                        <ul class="list-group">
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                <span>@Html.DisplayNameFor(model => model.BorrowerDetailsViewModel.Borrower.Email)</span>
+                                                <span class="text-lowercase fw-bold">@Model.BorrowerDetailsViewModel.Borrower.Email</span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                <span>@Html.DisplayNameFor(model => model.BorrowerDetailsViewModel.Borrower.Phone)</span>
+                                                <span class="fw-bold">@Model.BorrowerDetailsViewModel.Borrower.Phone</span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                <span>@Html.DisplayNameFor(model => model.BorrowerDetailsViewModel.Borrower.Address)</span>
+                                                <span class="fw-bold">@Model.BorrowerDetailsViewModel.Borrower.Address</span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                <span>@Html.DisplayNameFor(model => model.BorrowerDetailsViewModel.Borrower.Village)</span>
+                                                <span class="fw-bold">@Model.BorrowerDetailsViewModel.Borrower.Village</span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                <span>@Html.DisplayNameFor(model => model.BorrowerDetailsViewModel.Borrower.Subcounty)</span>
+                                                <span class="fw-bold">@Model.BorrowerDetailsViewModel.Borrower.Subcounty</span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                <span>@Html.DisplayNameFor(model => model.BorrowerDetailsViewModel.Borrower.County)</span>
+                                                <span class="fw-bold">@Model.BorrowerDetailsViewModel.Borrower.County</span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                <span>@Html.DisplayNameFor(model => model.BorrowerDetailsViewModel.Borrower.Country)</span>
+                                                <span class="fw-bold">@Model.BorrowerDetailsViewModel.Borrower.Country</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="nav-loans" role="tabpanel" aria-labelledby="nav-loans-tab">
+                                @if (borrowerHasLoans)
+                                {
+                                    <div class="d-flex justify-content-end align-items-center mb-3">
+                                        <a asp-page="/Loans/Create" asp-route-BorrowerId="@Model.BorrowerDetailsViewModel.Borrower.Id" class="text-decoration-none fs-6 fw-light">Add loan</a>
+                                    </div>
+                                    <table class="w-100 table mb-3">
+                                        <thead>
+                                            <tr>
+                                                <th class="fw-light fs-6">@Html.DisplayNameFor(model => model.BorrowerDetailsViewModel.Borrower.Loans[0].DateOpened)</th>
+                                                <th class="fw-light fs-6">@Html.DisplayNameFor(model => model.BorrowerDetailsViewModel.Borrower.Loans[0].Principal)</th>
+                                                <th class="fw-light fs-6">@Html.DisplayNameFor(model => model.BorrowerDetailsViewModel.Borrower.Loans[0].DurationInDays)</th>
+                                                <th class="fw-light fs-6">@Html.DisplayNameFor(model => model.BorrowerDetailsViewModel.Borrower.Loans[0].InterestRate)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.BorrowerDetailsViewModel.Borrower.Loans!)
+                                            {
+                                                <tr valign="middle">
+                                                    <td>@item.DateOpened.ToShortDateString()</td>
+                                                    <td>@item.Principal.ToString("C")</td>
+                                                    <td>@item.DurationInDays</td>
+                                                    <td>@item.InterestRate</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                }
+                                else
+                                {
+                                    <div class="text-center">
+                                        <h5 class="h5 text-center">Loans</h5>
+                                        <p class="lead">No loans at this time.</p>
+                                        <a asp-page="/Loans/Create" asp-route-BorrowerId="@Model.BorrowerDetailsViewModel.Borrower.Id" class="text-decoration-none fs-6 fw-light">Create loan</a>
+                                    </div>
+                                }
+                            </div>
+                            <div class="tab-pane fade" id="nav-installments" role="tabpanel" aria-labelledby="nav-installments-tab">
+                                @if (borrowerHasInstallments)
+                                {
+                                    <div class="d-flex justify-content-end align-items-center mb-3">
+                                        <a asp-page="/Loans/Create" asp-route-BorrowerId="@Model.BorrowerDetailsViewModel.Borrower.Id" class="text-decoration-none fs-6 fw-light">Add loan</a>
+                                    </div>
+                                    <table class="w-100 table mb-3">
+                                        <thead>
+                                            <tr>
+                                                <th class="fw-light fs-6">@Html.DisplayNameFor(model => model.BorrowerDetailsViewModel.Borrower.Installments[0].Loan!.LoanNumber)</th>
+                                                <th class="fw-light fs-6">@Html.DisplayNameFor(model => model.BorrowerDetailsViewModel.Borrower.Installments[0].InstallmentNumber)</th>
+                                                <th class="fw-light fs-6">@Html.DisplayNameFor(model => model.BorrowerDetailsViewModel.Borrower.Installments[0].PaymentNumber)</th>
+                                                <th class="fw-light fs-6">@Html.DisplayNameFor(model => model.BorrowerDetailsViewModel.Borrower.Installments[0].DateDue)</th>
+                                                <th class="fw-light fs-6">@Html.DisplayNameFor(model => model.BorrowerDetailsViewModel.Borrower.Installments[0].Amount)</th>
+                                                <th class="fw-light fs-6">@Html.DisplayNameFor(model => model.BorrowerDetailsViewModel.Borrower.Installments[0].BalanceAfterInstallment)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.BorrowerDetailsViewModel.Borrower.Installments!)
+                                            {
+                                                <tr valign="middle">
+                                                    <td>@item.Loan!.LoanNumber</td>
+                                                    <td>@item.InstallmentNumber</td>
+                                                    <td>@item.PaymentNumber</td>
+                                                    <td>@item.DateDue.ToShortDateString()</td>
+                                                    <td>@item.Amount.ToString("C")</td>
+                                                    <td>@item.BalanceAfterInstallment.ToString("C")</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                }
+                                else
+                                {
+                                    <div class="text-center">
+                                        <h5 class="h5 text-center">Installments</h5>
+                                        <p class="lead">No installments at this time. Create a loan to add installments.</p>
+                                        <a asp-page="/Loans/Create" asp-route-BorrowerId="@Model.BorrowerDetailsViewModel.Borrower.Id" class="text-decoration-none fs-6 fw-light">Create loan</a>
+                                    </div>
+                                }
+                            </div>
+                            <div class="tab-pane fade" id="nav-analysis" role="tabpanel" aria-labelledby="nav-analysis-tab">
+                                @if (borrowerHasAnalyses)
+                                {
+
+                                    <div class="d-flex justify-content-end align-items-center mb-3">
+                                        <a asp-page="CreditAnalysis" asp-route-BorrowerId="@Model.BorrowerDetailsViewModel.Borrower.Id" class="text-decoration-none fs-6 fw-light">Add analysis</a>
+                                    </div>
+
+                                    <ul class="list-group">
+                                        @foreach (var item in Model.BorrowerDetailsViewModel.Borrower.CreditAnalyses!)
+                                        {
+
+                                            <li class="list-group-item">
+                                                <div class="mb-3">
+                                                    <h5 class="fs-5 fw-light">Credit analysis as of <span class="fs-6 fw-bold">@item.DateCreated.ToLongDateString()</span> </h5>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="mb-3">
+                                                    <h5 class="fs-6 fw-light">Income and expenditure</h5>
+                                                    <ul class="list-group">
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            <span>@Html.DisplayNameFor(model => model.BorrowerDetailsViewModel.Borrower.CreditAnalyses[0].AverageIncome)</span>
+                                                            <span class="fw-bold">@item.AverageIncome.ToString("C")</span>
+                                                        </li>
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            <span>@Html.DisplayNameFor(model => model.BorrowerDetailsViewModel.Borrower.CreditAnalyses[0].AvereageExpenditure)</span>
+                                                            <span class="fw-bold">@item.AvereageExpenditure.ToString("C")</span>
+                                                        </li>
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            <span>@Html.DisplayNameFor(model => model.BorrowerDetailsViewModel.Borrower.CreditAnalyses[0].AverageSavings)</span>
+                                                            <span class="fw-bold">@item.AverageSavings.ToString("C")</span>
+                                                        </li>
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            <span>@Html.DisplayNameFor(model => model.BorrowerDetailsViewModel.Borrower.CreditAnalyses[0].ExtraIncome)</span>
+                                                            <span class="fw-bold">@item.ExtraIncome.ToString("C")</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <h5 class="fs-6 fw-light">Loan Limit</h5>
+                                                    <ul class="list-group">
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            <span>@Html.DisplayNameFor(model => model.BorrowerDetailsViewModel.Borrower.CreditAnalyses[0].LoanPrincipal)</span>
+                                                            <span class="fw-bold">@item.LoanPrincipal.ToString("C")</span>
+                                                        </li>
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            <span>@Html.DisplayNameFor(model => model.BorrowerDetailsViewModel.Borrower.CreditAnalyses[0].DurationInDays)</span>
+                                                            <span class="fw-bold">@item.DurationInDays</span>
+                                                        </li>
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            <span>@Html.DisplayNameFor(model => model.BorrowerDetailsViewModel.Borrower.CreditAnalyses[0].InterestRate)</span>
+                                                            <span class="fw-bold">@item.InterestRate</span>
+                                                        </li>
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            <span>@Html.DisplayNameFor(model => model.BorrowerDetailsViewModel.Borrower.CreditAnalyses[0].LoanAmount)</span>
+                                                            <span class="fw-bold">@item.LoanAmount.ToString("C")</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        }
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <div class="text-center">
+                                        <h5 class="h5 text-center">Analysis</h5>
+                                        <p class="lead">No analysis at this time.</p>
+                                        <a asp-page="CreditAnalysis" asp-route-BorrowerId="@Model.BorrowerDetailsViewModel.Borrower.Id" class="text-decoration-none fs-6 fw-light">Create analyis</a>
+                                    </div>
+                                }
+                            </div>
+                            <div class="tab-pane fade" id="nav-documents" role="tabpanel" aria-labelledby="nav-documents-tab">
+                                @if (borrowerHasDocuments)
+                                {
+                                    <div class="d-flex justify-content-end align-items-center mb-3">
+                                        <a href="#" class="text-decoration-none fs-6 fw-light">Add Identification Document</a>
+                                    </div>
+                                    <table class="w-100 table">
+                                        <thead>
+                                            <tr>
+                                                <th class="fw-light fs-6">Identification Type</th>
+                                                <th class="fw-light fs-6">Idenitification Number</th>
+                                                <th class="fw-light fs-6">Scanned Identification</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr valign="middle">
+                                                <td>@(Enum.GetName(IdentificationDocumentType.OTHER))</td>
+                                                <td></td>
+                                                <td class="d-none d-lg-block">
+                                                    <img src="~/images/borrowers/@(Model.BorrowerDetailsViewModel.Borrower.DisplayPictureURL ?? placeholderImageFileName)" alt="" asp-append-version="true" class="img-fluid" height="50" width="50">
+                                                </td>
+                                            </tr>
+                                            <tr valign="middle">
+                                                <td>@Model.BorrowerDetailsViewModel.Borrower.IdentificationDocumentType</td>
+                                                <td>@Model.BorrowerDetailsViewModel.Borrower.IdentificationDocumentNumber</td>
+                                                <td class="d-none d-lg-block">
+                                                    <img src="~/images/documents/@(Model.BorrowerDetailsViewModel.Borrower.IdentificationDocumentURL ?? placeholderImageFileName)" alt="" asp-append-version="true" class="img-fluid" height="50" width="50">
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                }
+                                else
+                                {
+                                    <div class="text-center">
+                                        <h5 class="h5 text-center">Documents</h5>
+                                        <p class="lead">No documents at this time.</p>
+                                        <a href="#" class="text-decoration-none fs-6 fw-light">Upload document</a>
+
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex btn-group">
+                            <a asp-page="Edit" asp-route-ID="@Model.BorrowerDetailsViewModel.Borrower.Id" class="btn btn-outline-primary">Edit</a>
+                            <a asp-page="Delete" asp-route-ID="@Model.BorrowerDetailsViewModel.Borrower.Id" class="btn btn-outline-danger">Delete</a>
+                            <a asp-page="Index" class="btn btn-outline-primary">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content -->

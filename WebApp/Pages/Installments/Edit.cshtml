@@ -1,0 +1,224 @@
+﻿@page "{id}"
+@model WebApp.Pages.Installments.EditModel
+
+@{
+    ViewData["Title"] = "Edit Installment";
+}
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Installments</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-page="/Index">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a asp-page="Index">Installments</a></li>
+                    <li class="breadcrumb-item active">Edit</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<div class="content">
+    <div class="container-fluid">
+        <div class="row row-cols-md-2">
+            <div class="col-md-4">
+                <ul class="list-group">
+                    @if (!string.IsNullOrEmpty(Model.ReturnURL))
+                    {
+                        <li class="list-group-item">
+                            <a href="@Model.ReturnURL" class="text-decoration-none fs-6 fw-light">Back to loan</a>
+                        </li>
+                    }
+                    <li class="list-group-item">
+                        <a asp-page="Index" class="text-decoration-none fs-6 fw-light">Back to installments</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="#installment" class="text-decoration-none fs-6 fw-light">Installment</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="#installment-status" class="text-decoration-none fs-6 fw-light">Installment status</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-8">
+                <form method="post">
+                    <div class="row">
+                        <div class="col-12">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        </div>
+                    </div>
+                    <div id="installment" class="card card-primary card-outline mb-3">
+                        <div class="card-header bg-white">
+                            <h2 class="card-title h4 fw-lighter">Installment details</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label asp-for="InstallmentEditViewModel.Installment.InstallmentNumber" class="form-label"></label>
+                                    <input readonly asp-for="InstallmentEditViewModel.Installment.InstallmentNumber" class="form-control" />
+                                    <span asp-validation-for="InstallmentEditViewModel.Installment.InstallmentNumber" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-12">
+                                    <label asp-for="InstallmentEditViewModel.Installment.PaymentNumber" class="form-label"></label>
+                                    <input readonly asp-for="InstallmentEditViewModel.Installment.PaymentNumber" class="form-control" />
+                                    <span asp-validation-for="InstallmentEditViewModel.Installment.PaymentNumber" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-12">
+                                    <label asp-for="InstallmentEditViewModel.Installment.DateDue" class="form-label"></label>
+                                    <input readonly asp-for="InstallmentEditViewModel.Installment.DateDue" class="form-control" />
+                                    <span asp-validation-for="InstallmentEditViewModel.Installment.DateDue" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="InstallmentEditViewModel.Installment.Amount" class="form-label"></label>
+                                    <input readonly asp-for="InstallmentEditViewModel.Installment.Amount" class="form-control" />
+                                    <span asp-validation-for="InstallmentEditViewModel.Installment.Amount" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="InstallmentEditViewModel.Installment.BalanceAfterInstallment" class="form-label"></label>
+                                    <input readonly asp-for="InstallmentEditViewModel.Installment.BalanceAfterInstallment" class="form-control" />
+                                    <span asp-validation-for="InstallmentEditViewModel.Installment.BalanceAfterInstallment" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="InstallmentEditViewModel.Installment.PercentagePenaltyFeePerDayOverDue" class="form-label"></label>
+                                    <input readonly asp-for="InstallmentEditViewModel.Installment.PercentagePenaltyFeePerDayOverDue" class="form-control" />
+                                    <span asp-validation-for="InstallmentEditViewModel.Installment.PercentagePenaltyFeePerDayOverDue" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="installment-status" class="card mb-3">
+                        <div class="card-header bg-white">
+                            <nav>
+                                <div class="nav nav-tabs nav-justified card-header-tabs" id="nav-tab" role="tablist">
+                                    <button class="nav-link  active fs-6 fw-light" id="nav-payment-status-tab" data-bs-toggle="tab" data-bs-target="#nav-payment-status" type="button" role="tab" aria-controls="nav-payment-status" aria-selected="true">Payment Status</button>
+                                    <button class="nav-link fs-6 fw-light" id="nav-overdue-status-tab" data-bs-toggle="tab" data-bs-target="#nav-overdue-status" type="button" role="tab" aria-controls="nav-overdue-status" aria-selected="false">Overdue Status</button>
+                                    <button class="nav-link fs-6 fw-light" id="nav-written-off-status-tab" data-bs-toggle="tab" data-bs-target="#nav-written-off-status" type="button" role="tab" aria-controls="nav-written-off-status" aria-selected="false">Written-off Status</button>
+                                    <button class="nav-link fs-6 fw-light" id="nav-scrapped-off-status-tab" data-bs-toggle="tab" data-bs-target="#nav-scrapped-off-status" type="button" role="tab" aria-controls="nav-scrapped-off-status" aria-selected="false">Scrapped-off Status</button>
+                                </div>
+                            </nav>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content" id="nav-tabContent">
+                                <div class="tab-pane fade show active" id="nav-payment-status" role="tabpanel" aria-labelledby="nav-payment-status-tab">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-check">
+                                                <input asp-for="InstallmentEditViewModel.Installment.IsPaid" class="form-check-input" />
+                                                <label asp-for="InstallmentEditViewModel.Installment.IsPaid" class="form-check-label"></label>
+                                                <span asp-validation-for="InstallmentEditViewModel.Installment.IsPaid" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label asp-for="InstallmentEditViewModel.Installment.DatePaid" class="form-label"></label>
+                                            <input asp-for="InstallmentEditViewModel.Installment.DatePaid" class="form-control" />
+                                            <span asp-validation-for="InstallmentEditViewModel.Installment.DatePaid" class="text-danger"></span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label asp-for="InstallmentEditViewModel.Installment.PaidBy" class="form-label"></label>
+                                            <input asp-for="InstallmentEditViewModel.Installment.PaidBy" class="form-control" />
+                                            <span asp-validation-for="InstallmentEditViewModel.Installment.PaidBy" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade show" id="nav-overdue-status" role="tabpanel" aria-labelledby="nav-overdue-status-tab">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-check">
+                                                <input asp-for="InstallmentEditViewModel.Installment.IsOverDue" class="form-check-input" />
+                                                <label asp-for="InstallmentEditViewModel.Installment.IsOverDue" class="form-check-label"></label>
+                                                <span asp-validation-for="InstallmentEditViewModel.Installment.IsOverDue" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label asp-for="InstallmentEditViewModel.Installment.DaysOverDueBy" class="form-label"></label>
+                                            <input asp-for="InstallmentEditViewModel.Installment.DaysOverDueBy" class="form-control" />
+                                            <span asp-validation-for="InstallmentEditViewModel.Installment.DaysOverDueBy" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade show" id="nav-written-off-status" role="tabpanel" aria-labelledby="nav-written-off-status-tab">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-check">
+                                                <input asp-for="InstallmentEditViewModel.Installment.IsWrittenOff" class="form-check-input" />
+                                                <label asp-for="InstallmentEditViewModel.Installment.IsWrittenOff" class="form-check-label"></label>
+                                                <span asp-validation-for="InstallmentEditViewModel.Installment.IsWrittenOff" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label asp-for="InstallmentEditViewModel.Installment.DateWrittenOff" class="form-label"></label>
+                                            <input asp-for="InstallmentEditViewModel.Installment.DateWrittenOff" class="form-control" />
+                                            <span asp-validation-for="InstallmentEditViewModel.Installment.DateWrittenOff" class="text-danger"></span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label asp-for="InstallmentEditViewModel.Installment.WrittenOffBy" class="form-label"></label>
+                                            <input asp-for="InstallmentEditViewModel.Installment.WrittenOffBy" class="form-control" />
+                                            <span asp-validation-for="InstallmentEditViewModel.Installment.WrittenOffBy" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade show" id="nav-scrapped-off-status" role="tabpanel" aria-labelledby="nav-scrapped-off-status-tab">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-check">
+                                                <input asp-for="InstallmentEditViewModel.Installment.IsScrappedOff" class="form-check-input" />
+                                                <label asp-for="InstallmentEditViewModel.Installment.IsScrappedOff" class="form-check-label"></label>
+                                                <span asp-validation-for="InstallmentEditViewModel.Installment.IsScrappedOff" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label asp-for="InstallmentEditViewModel.Installment.PercentageScrappedOff" class="form-label"></label>
+                                            <input asp-for="InstallmentEditViewModel.Installment.PercentageScrappedOff" class="form-control" />
+                                            <span asp-validation-for="InstallmentEditViewModel.Installment.PercentageScrappedOff" class="text-danger"></span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label asp-for="InstallmentEditViewModel.Installment.DateScrappedOff" class="form-label"></label>
+                                            <input asp-for="InstallmentEditViewModel.Installment.DateScrappedOff" class="form-control" />
+                                            <span asp-validation-for="InstallmentEditViewModel.Installment.DateScrappedOff" class="text-danger"></span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label asp-for="InstallmentEditViewModel.Installment.ScrappedOffBy" class="form-label"></label>
+                                            <input asp-for="InstallmentEditViewModel.Installment.ScrappedOffBy" class="form-control" />
+                                            <span asp-validation-for="InstallmentEditViewModel.Installment.ScrappedOffBy" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="submit" value="Update" class="form-control btn btn-primary" />
+                                </div>
+                                <div class="col-md-6">
+                                    @if (!string.IsNullOrEmpty(Model.ReturnURL))
+                                    {
+                                        <a href="@Model.ReturnURL" class="btn btn-outline-primary w-100">Cancel</a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-page="Index" class="btn btn-outline-primary w-100">Cancel</a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- /.content -->
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

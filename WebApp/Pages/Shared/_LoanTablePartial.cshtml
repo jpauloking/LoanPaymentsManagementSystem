@@ -1,0 +1,121 @@
+﻿@model IEnumerable<WebApp.ViewModels.LoanViewModel>
+
+@{
+}
+
+<table class="w-100 table table-hover table-responsive advanced-table">
+    <thead>
+        <tr>
+            <th class="fw-light fs-6">
+                Loan Number
+            </th>
+            <th class="fw-light fs-6">
+                Date Opened
+            </th>
+            <th class="fw-light fs-6">
+                Principal
+            </th>
+            <th class="fw-light fs-6">
+                Duration
+            </th>
+            <th class="fw-light fs-6">
+                Interest accrued
+            </th>
+            <th class="fw-light fs-6">
+                Amount
+            </th>
+            <th class="fw-light fs-6">
+                Borrower
+            </th>
+            <th class="fw-light fs-6">
+                Status
+            </th>
+            <th class="fw-light fs-6"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr valign="top">
+                <td>
+                    <a asp-page="Details" asp-route-ID="@item.Id" class="text-decoration-none">@item.LoanNumber</a>
+                </td>
+                <td>
+                    @item.DateOpened.ToShortDateString()
+                </td>
+                <td>
+                    @item.Principal.ToString("C")
+                </td>
+                <td>
+                    @item.DurationInDays
+                </td>
+                <td>
+                    @item.InterestAccrued.ToString("C")
+                </td>
+                <td>
+                    @item.Amount.ToString("C")
+                </td>
+                <td>
+                    <a asp-page="/Borrowers/Details" asp-route-ID="@item.BorrowerId" class="text-decoration-none">@item.BorrowerName</a>
+                </td>
+                @if (!item.IsOverDue && !item.IsPaid && !item.IsScrappedOff && !item.IsWrittenOff)
+                {
+                    <td>
+                        <div class="badge badge-sm bg-warning">Running</div><br>
+                    </td>
+                }
+                else
+                {
+                    if (item.IsPaid)
+                    {
+                        <td>
+                            <div class="badge badge-sm bg-success">Paid</div>
+                            <div class="badge badge-sm bg-success">@(item.PaidBy)</div>
+                            @if (item.DatePaid.HasValue)
+                            {
+                                <div class="badge badge-sm bg-success">@(DateOnly.FromDateTime((DateTime)item.DatePaid!))</div>
+                            }
+                        </td>
+                    }
+                    else if (item.IsOverDue)
+                    {
+                        <td>
+                            <div class="badge badge-sm bg-warning">Running</div><br><br>
+                            <div class="badge badge-sm bg-danger">Overdue</div>
+                            <div class="badge badge-sm bg-danger">@(item.DaysOverDueBy) days</div>
+                            <div class="badge badge-sm bg-danger">Penalty @((item.Principal * (decimal)(item.PercentagePenaltyFeePerDayOverDue) * item.DaysOverDueBy).ToString("C"))</div>
+                        </td>
+                    }
+                    else if (item.IsScrappedOff)
+                    {
+                        <td>
+                            <div class="badge badge-sm bg-warning">Running</div><br>
+                            <div class="badge badge-sm bg-danger">Scrapped-off</div>
+                            <div class="badge badge-sm bg-danger">@((item.Principal * (decimal)(item.PercentageScrappedOff)).ToString("C"))</div>
+                            @if (item.DateScrappedOff.HasValue)
+                            {
+                                <div class="badge badge-sm bg-danger">@(DateOnly.FromDateTime((DateTime)item.DateScrappedOff!))</div>
+                            }
+                        </td>
+                    }
+                    else if (item.IsWrittenOff)
+                    {
+                        <td>
+                            <div class="badge badge-sm bg-danger">Written-off</div>
+                            <div class="badge badge-sm bg-danger">@(item.WrittenOffBy)</div>
+                            @if (item.DateWrittenOff.HasValue)
+                            {
+                                <div class="badge badge-sm bg-danger">@(DateOnly.FromDateTime((DateTime)item.DateWrittenOff))</div>
+                            }
+                        </td>
+                    }
+                }
+                <td>
+                    <div class="btn-group w-100">
+                        <a asp-page="Details" asp-route-ID="@item.Id" class="text-decoration-none fs-6 fw-light">Manage</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,106 @@
+﻿@model IEnumerable<WebApp.ViewModels.BorrowerViewModel>
+
+@{
+    string placeholderImageFileName = "no_image.png";
+}
+
+<table class="w-100 table advanced-table">
+    <thead>
+        <tr valign="Bottom">
+            <th class="fw-light fs-6">
+                Picture
+            </th>
+            <th class="fw-light fs-6">
+                First name
+            </th>
+            <th class="fw-light fs-6">
+                Last name
+            </th>
+            <th class="fw-light fs-6">
+                Email
+            </th>
+            <th class="fw-light fs-6">
+                Phone
+            </th>
+            <th class="fw-light fs-6">
+                Address
+            </th>
+            <th class="fw-light fs-6">
+                Occupation
+            </th>
+            <th class="fw-light fs-6">
+                Company
+            </th>
+            <th class="fw-light fs-6"></th>
+            <th class="fw-light fs-6"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr valign="middle">
+                <td>
+                    <img src="~/images/borrowers/@(item.DisplayPictureURL ?? placeholderImageFileName)" alt="" asp-append-version="true" class="img-fluid img-thumbnail" height="50" width="50">
+                </td>
+                <td>
+                    @item.FirstName
+                </td>
+                <td>
+                    @item.LastName
+                </td>
+                <td class="text-lowercase">
+                    @item.Email
+                </td>
+                <td>
+                    @item.Phone
+                </td>
+                <td>
+                    @item.Address
+                </td>
+                <td>
+                    @item.Occupation
+                </td>
+                <td>
+                    @item.Company
+                </td>
+                <td>
+                    <a asp-page="Details" asp-route-ID="@item.Id" class="text-decoration-none fs-6 fw-light">Manage</a>
+                </td>
+                <td>
+                    <a asp-page="/Loans/Create" asp-route-BorrowerID="@item.Id" class="text-decoration-none fs-6 fw-light">Add loan</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr valign="Top">
+            <th class="fw-light fs-6">
+                Picture
+            </th>
+            <th class="fw-light fs-6">
+                First name
+            </th>
+            <th class="fw-light fs-6">
+                Last name
+            </th>
+            <th class="fw-light fs-6">
+                Email
+            </th>
+            <th class="fw-light fs-6">
+                Phone
+            </th>
+            <th class="fw-light fs-6">
+                Address
+            </th>
+            <th class="fw-light fs-6">
+                Occupation
+            </th>
+            <th class="fw-light fs-6">
+                Company
+            </th>
+            <th class="fw-light fs-6"></th>
+            <th class="fw-light fs-6"></th>
+        </tr>
+    </tfoot>
+</table>
+

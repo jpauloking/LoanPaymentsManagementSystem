@@ -1,0 +1,57 @@
+﻿@page "{id}"
+@model WebApp.Pages.Installments.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete Installment";
+}
+
+<section class="row py-2">
+    <div class="col-md-8 mx-auto">
+        <div class="card mb-3">
+            <div class="card-header bg-white">
+                <h2 class="card-title h4 fw-lighter">Delete installment with ID [@(Model.InstallmentDeleteViewModel.Installment.Id)]?</h2>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Installment number</span>
+                                <span class="fw-bold">@Model.InstallmentDeleteViewModel.Installment.InstallmentNumber</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Payment number</span>
+                                <span class="fw-bold">@Model.InstallmentDeleteViewModel.Installment.PaymentNumber</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Installment amount</span>
+                                <span class="fw-bold">@Model.InstallmentDeleteViewModel.Installment.Amount.ToString("C")</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Loan ID</span>
+                                <span class="fw-bold">@Model.InstallmentDeleteViewModel.Installment.Loan?.LoanNumber</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Borrower name</span>
+                                <span class="fw-bold">@Model.InstallmentDeleteViewModel.Installment.Loan?.BorrowerName</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h3 class="h6 text-danger">Warning</h3>
+                        <p>Deleting an installment is an ireversible action. <em class="fw-bold text-danger">THIS ACTION IS IRREVERSIBLE</em></p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer bg-white">
+                <form method="post">
+                    <input type="hidden" asp-for="InstallmentDeleteViewModel.Installment.Id" />
+                    <div class="d-flex btn-group">
+                        <input type="submit" value="Delete" class="btn btn-danger" />
+                        <a asp-page="Index" class="btn btn-outline-primary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

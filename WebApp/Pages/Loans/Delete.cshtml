@@ -1,0 +1,71 @@
+﻿@page "{id}"
+@model WebApp.Pages.Loans.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete Loan";
+}
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Loans</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-page="/Index">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a asp-page="Index">Loans</a></li>
+                    <li class="breadcrumb-item ">Delete</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<div class="content">
+    <div class="container-fluid">
+        <div class="row py-2">
+            <div class="col-md-8 mx-auto">
+                <div class="card card-primary card-outline mb-3">
+                    <div class="card-header bg-white">
+                        <h2 class="card-title h4 fw-lighter">Delete loan with ID [@(Model.LoanDeleteViewModel.Loan.Id)]?</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <dl>
+                                    <dt>Loan ID</dt>
+                                    <dd>@Model.LoanDeleteViewModel.Loan.Id</dd>
+                                </dl>
+                                <dl>
+                                    <dt>@Html.DisplayNameFor(model => model.LoanDeleteViewModel.Loan.Borrower!.FirstName)</dt>
+                                    <dd>@Model.LoanDeleteViewModel.Loan.Borrower!.FirstName</dd>
+                                </dl>
+                                <dl>
+                                    <dt>@Html.DisplayNameFor(model => model.LoanDeleteViewModel.Loan.Borrower!.LastName)</dt>
+                                    <dd>@Model.LoanDeleteViewModel.Loan.Borrower.LastName</dd>
+                                </dl>
+                            </div>
+                            <div class="col-md-8">
+                                <h3 class="h6 text-danger">Warning</h3>
+                                <p>Deleting a loan is an ireversible action. Once a loan is deleted all installment information related to the loan are deleted too. <em class="fw-bold text-danger">THIS ACTION IS IRREVERSIBLE</em></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white">
+                        <form method="post">
+                            <input type="hidden" asp-for="LoanDeleteViewModel.Loan.Id" />
+                            <div class="d-flex btn-group">
+                                <input type="submit" value="Delete" class="btn btn-danger" />
+                                <a asp-page="Details" asp-route-ID="@Model.LoanDeleteViewModel.Loan.Id" class="btn btn-outline-primary">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- /.content -->

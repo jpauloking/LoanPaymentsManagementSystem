@@ -1,0 +1,218 @@
+﻿@page "{BorrowerId:Guid}"
+@model WebApp.Pages.Borrowers.CreditAnalysisModel
+@{
+    ViewData["Title"] = "Analysis";
+    string placeholderImageFileName = "no_image.png";
+}
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Borrowers</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-page="/Index">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a asp-page="Index">Borrowers</a></li>
+                    <li class="breadcrumb-item"><a asp-page="Details" asp-route-ID="@Model.BorrowerId">Details</a></li>
+                    <li class="breadcrumb-item active">Credit Analysis</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.Content Header -->
+<!-- Main content -->
+<div class="content">
+    <div class="container-fluid">
+        <div class="row row-cols-md-2">
+            <div class="col-md-6">
+                <ul class="list-group mb-3">
+                    <li class="list-group-item">
+                        <a asp-page="/Borrowers/Details" asp-route-ID="@Model.BorrowerId" class="text-decoration-none fs-6 fw-light">Back to @(Model.CreditAnalysisCreateViewModel.CreditAnalysis.Borrower!.DisplayName)'s details</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="#incomes-and-expenses" class="text-decoration-none fs-6 fw-light">Incomes and expenses</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="#loan" class="text-decoration-none fs-6 fw-light">Loan</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="#notes" class="text-decoration-none fs-6 fw-light">Notes</a>
+                    </li>
+                </ul>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row gap-3 gap-md-0">
+                            <div class="col-md-3">
+                                <img src="~/images/borrowers/@(Model.CreditAnalysisCreateViewModel.CreditAnalysis.Borrower.DisplayPictureURL ?? placeholderImageFileName)" alt="" class="img-fluid img-thumbnail" asp-append-version="true" />
+                            </div>
+                            <div class="col-md-9">
+                                <ul class="list-group mb-3">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span class="fs-6">@Html.DisplayNameFor(model => model.CreditAnalysisCreateViewModel.CreditAnalysis.Borrower!.FirstName)</span>
+                                        <span class="fs-6 fw-light">@Model.CreditAnalysisCreateViewModel.CreditAnalysis.Borrower!.FirstName</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span>@Html.DisplayNameFor(model => Model.CreditAnalysisCreateViewModel.CreditAnalysis.Borrower!.LastName)</span>
+                                        <span class="fs-6 fw-light">@Model.CreditAnalysisCreateViewModel.CreditAnalysis.Borrower!.LastName</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span>@Html.DisplayNameFor(model => Model.CreditAnalysisCreateViewModel.CreditAnalysis.Borrower!.IdentificationDocumentType)</span>
+                                        <span class="fs-6 fw-light">@Model.CreditAnalysisCreateViewModel.CreditAnalysis.Borrower!.IdentificationDocumentType</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span>@Html.DisplayNameFor(model => Model.CreditAnalysisCreateViewModel.CreditAnalysis.Borrower!.IdentificationDocumentNumber)</span>
+                                        <span class="fs-6 fw-light">@Model.CreditAnalysisCreateViewModel.CreditAnalysis.Borrower!.IdentificationDocumentNumber</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span>@Html.DisplayNameFor(model => Model.CreditAnalysisCreateViewModel.CreditAnalysis.Borrower!.Occupation)</span>
+                                        <span class="fs-6 fw-light">@Model.CreditAnalysisCreateViewModel.CreditAnalysis.Borrower!.Occupation</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span>@Html.DisplayNameFor(model => Model.CreditAnalysisCreateViewModel.CreditAnalysis.Borrower!.Company)</span>
+                                        <span class="fs-6 fw-light">@Model.CreditAnalysisCreateViewModel.CreditAnalysis.Borrower!.Company</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <form method="post">
+                    <div class="row">
+                        <div class="col-12">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        </div>
+                    </div>
+                    <div id="incomes-and-expenses" class="card card-primary card-outline mb-3">
+                        <div class="card-header bg-white">
+                            <h2 class="card-title h4 fw-lighter">Incomes and expenses</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <label asp-for="CreditAnalysisCreateViewModel.CreditAnalysis.DateCreated" class="form-label"></label>
+                                    <input asp-for="CreditAnalysisCreateViewModel.CreditAnalysis.DateCreated" class="form-control" />
+                                    <span asp-validation-for="CreditAnalysisCreateViewModel.CreditAnalysis.DateCreated" class="text-danger"></span>
+                                </div>
+                                <div class="col-12">
+                                    <label asp-for="CreditAnalysisCreateViewModel.CreditAnalysis.AverageIncome" class="form-label"></label>
+                                    <input asp-for="CreditAnalysisCreateViewModel.CreditAnalysis.AverageIncome" class="form-control" />
+                                    <span asp-validation-for="CreditAnalysisCreateViewModel.CreditAnalysis.AverageIncome" class="text-danger"></span>
+                                </div>
+                                <div class="col-12">
+                                    <label asp-for="CreditAnalysisCreateViewModel.CreditAnalysis.AvereageExpenditure" class="form-label"></label>
+                                    <input asp-for="CreditAnalysisCreateViewModel.CreditAnalysis.AvereageExpenditure" class="form-control" />
+                                    <span asp-validation-for="CreditAnalysisCreateViewModel.CreditAnalysis.AvereageExpenditure" class="text-danger"></span>
+                                </div>
+                                <div class="col-12">
+                                    <label asp-for="CreditAnalysisCreateViewModel.CreditAnalysis.AverageSavings" class="form-label"></label>
+                                    <input asp-for="CreditAnalysisCreateViewModel.CreditAnalysis.AverageSavings" class="form-control" />
+                                    <span asp-validation-for="CreditAnalysisCreateViewModel.CreditAnalysis.AverageSavings" class="text-danger"></span>
+                                </div>
+                                <div class="col-12">
+                                    <label asp-for="CreditAnalysisCreateViewModel.CreditAnalysis.ExtraIncome" class="form-label"></label>
+                                    <input asp-for="CreditAnalysisCreateViewModel.CreditAnalysis.ExtraIncome" class="form-control" />
+                                    <span asp-validation-for="CreditAnalysisCreateViewModel.CreditAnalysis.ExtraIncome" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="loan" class="card mb-3">
+                        <div class="card-header bg-white">
+                            <div>
+                                <h2 class="card-title h4 fw-lighter">
+                                    Loan
+                                </h2>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label asp-for="CreditAnalysisCreateViewModel.CreditAnalysis.LoanPrincipal" class="form-label"></label>
+                                    <input asp-for="CreditAnalysisCreateViewModel.CreditAnalysis.LoanPrincipal" class="form-control" />
+                                    <span asp-validation-for="CreditAnalysisCreateViewModel.CreditAnalysis.LoanPrincipal" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="CreditAnalysisCreateViewModel.CreditAnalysis.DurationInDays" class="form-label"></label>
+                                    <input asp-for="CreditAnalysisCreateViewModel.CreditAnalysis.DurationInDays" class="form-control" />
+                                    <span asp-validation-for="CreditAnalysisCreateViewModel.CreditAnalysis.DurationInDays" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="CreditAnalysisCreateViewModel.CreditAnalysis.InterestRate" class="form-label"></label>
+                                    <input asp-for="CreditAnalysisCreateViewModel.CreditAnalysis.InterestRate" class="form-control" />
+                                    <span asp-validation-for="CreditAnalysisCreateViewModel.CreditAnalysis.InterestRate" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-12">
+                                    <label asp-for="CreditAnalysisCreateViewModel.CreditAnalysis.LoanAmount" class="form-label"></label>
+                                    <input readonly asp-for="CreditAnalysisCreateViewModel.CreditAnalysis.LoanAmount" class="form-control" />
+                                    <span asp-validation-for="CreditAnalysisCreateViewModel.CreditAnalysis.LoanAmount" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="notes" class="card mb-3">
+                        <div class="card-header bg-white">
+                            <h2 class="card-title h4 fw-lighter">Notes</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <textarea asp-for="CreditAnalysisCreateViewModel.CreditAnalysis.Notes" class="form-control"></textarea>
+                                    <span asp-validation-for="CreditAnalysisCreateViewModel.CreditAnalysis.Notes" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="row py-2 gap-2 gap-md-0">
+                                <div class="col-md-6">
+                                    <input type="submit" value="Create" class="form-control btn btn-primary" />
+                                </div>
+                                <div class="col-md-6">
+                                    <a asp-page="/Borrowers/Details" asp-route-ID="@Model.BorrowerId" class="btn btn-outline-primary w-100">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- /.content -->
+<script>
+    const currentForm = document.forms[0];
+
+    function computeAmount() {
+        const principal = currentForm["CreditAnalysisCreateViewModel.CreditAnalysis.LoanPrincipal"].value ?? 0;
+        const interestRate = currentForm["CreditAnalysisCreateViewModel.CreditAnalysis.InterestRate"].value ?? 0;
+        const durationInDays = currentForm["CreditAnalysisCreateViewModel.CreditAnalysis.DurationInDays"].value ?? 0;
+        const amountInputField = currentForm["CreditAnalysisCreateViewModel.CreditAnalysis.LoanAmount"];
+
+        try {
+            if (!isNaN(principal) && !isNaN(interestRate) && !isNaN(durationInDays)) {
+                const dailyInterest = (1 / 30) * principal * (interestRate * 0.01);
+                const interestAccrued = dailyInterest * durationInDays;
+                const amountDue = parseFloat(interestAccrued) + parseFloat(principal);
+                amountInputField.value = Math.ceil(amountDue);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+
+    }
+
+    currentForm["CreditAnalysisCreateViewModel.CreditAnalysis.LoanPrincipal"].addEventListener("change", computeAmount);
+    currentForm["CreditAnalysisCreateViewModel.CreditAnalysis.InterestRate"].addEventListener("change", computeAmount);
+    currentForm["CreditAnalysisCreateViewModel.CreditAnalysis.DurationinDays"].addEventListener("change", computeAmount);
+
+</script>

@@ -1,0 +1,217 @@
+﻿@page
+@model WebApp.Pages.Amortization.IndexModel
+@{
+    ViewData["Title"] = "Amortization";
+}
+
+<section id="pageContent" class="row">
+    <div class="col-md-5">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <a asp-page="/Index" class="text-decoration-none fs-6 fw-light">Back to dashboard</a>
+            </li>
+            <li id="backButtonForPreview" class="list-group-item d-none">
+                <a asp-page="Index" class="text-decoration-none fs-6 fw-light">Back</a>
+            </li>
+        </ul>
+    </div>
+    <div id="form" class="col-md-7">
+        <form method="post">
+            <div class="row">
+                <div class="col-12">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-header bg-white">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label asp-for="AmortizationViewModel.AmortizationNumber" class="form-label card-title h4 fw-lighter"></label>
+                            <input readonly asp-for="AmortizationViewModel.AmortizationNumber" class="form-control" />
+                            <span asp-validation-for="AmortizationViewModel.AmortizationNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label asp-for="AmortizationViewModel.FirstName" class="form-label"></label>
+                            <input asp-for="AmortizationViewModel.FirstName" class="form-control" />
+                            <span asp-validation-for="AmortizationViewModel.FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="AmortizationViewModel.LastName" class="form-label"></label>
+                            <input asp-for="AmortizationViewModel.LastName" class="form-control" />
+                            <span asp-validation-for="AmortizationViewModel.LastName" class="text-danger"></span>
+                        </div>
+                        <div class="col-12">
+                            <label asp-for="AmortizationViewModel.Email" class="form-label"></label>
+                            <input asp-for="AmortizationViewModel.Email" class="form-control" />
+                            <span asp-validation-for="AmortizationViewModel.Email" class="text-danger"></span>
+                        </div>
+                        <div class="col-12">
+                            <label asp-for="AmortizationViewModel.Phone" class="form-label"></label>
+                            <input asp-for="AmortizationViewModel.Phone" class="form-control" />
+                            <span asp-validation-for="AmortizationViewModel.Phone" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <label asp-for="AmortizationViewModel.DateOpened" class="form-label"></label>
+                            <input asp-for="AmortizationViewModel.DateOpened" class="form-control" />
+                            <span asp-validation-for="AmortizationViewModel.DateOpened" class="text-danger"></span>
+                        </div>
+                        <div class="col-12">
+                            <label asp-for="AmortizationViewModel.Principal" class="form-label"></label>
+                            <input asp-for="AmortizationViewModel.Principal" class="form-control" />
+                            <span asp-validation-for="AmortizationViewModel.Principal" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="AmortizationViewModel.InterestRate" class="form-label"></label>
+                            <input asp-for="AmortizationViewModel.InterestRate" class="form-control" />
+                            <span asp-validation-for="AmortizationViewModel.InterestRate" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="AmortizationViewModel.DurationInDays" class="form-label"></label>
+                            <input asp-for="AmortizationViewModel.DurationInDays" class="form-control" />
+                            <span asp-validation-for="AmortizationViewModel.DurationInDays" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label asp-for="AmortizationViewModel.NumberOfInstallments" class="form-label"></label>
+                            <input asp-for="AmortizationViewModel.NumberOfInstallments" class="form-control" />
+                            <span asp-validation-for="AmortizationViewModel.NumberOfInstallments" class="text-danger"></span>
+                        </div>
+                        <div class="col-12">
+                            <label asp-for="AmortizationViewModel.AmountPerInstallment" class="form-label"></label>
+                            <input asp-for="AmortizationViewModel.AmountPerInstallment" class="form-control" />
+                            <span asp-validation-for="AmortizationViewModel.AmountPerInstallment" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-white">
+                    <div class="row py-2">
+                        <div class="col-md-6">
+                            <input type="submit" value="Create" class="form-control btn btn-primary mb-2 mb-0" />
+                        </div>
+                        <div class="col-md-6">
+                            <a asp-page="/Index" class="btn btn-outline-primary w-100 mb-2 mb-0">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="preview" class="d-none col-12 py-3">
+        <div class="card mb-3">
+            <div class="card-content">
+                <div class="card-header bg-white">
+                    <h2 id="printHeader" class="fs-6 fw-light">Preview</h2>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group mb-3">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span class="fs-6">First name</span>
+                            <span class="fs-6 fw-bold" id="firstName"></span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span class="fs-6">Last name</span>
+                            <span class="fs-6 fw-bold" id="lastName"></span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span class="fs-6">Email</span>
+                            <span class="fs-6 fw-bold" id="email"></span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span class="fs-6">Phone</span>
+                            <span class="fs-6 fw-bold" id="phone"></span>
+                        </li>
+                    </ul>
+                    <ul class="list-group mb-3">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span class="fs-6">Date opened</span>
+                            <span class="fs-6 fw-bold" id="dateOpened"></span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span class="fs-6">Principal</span>
+                            <span class="fs-6 fw-bold" id="principal"></span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span class="fs-6">Interest rate (%)</span>
+                            <span class="fs-6 fw-bold" id="interestRate"></span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span class="fs-6">Duration (days)</span>
+                            <span class="fs-6 fw-bold" id="durationInDays"></span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span class="fs-6">Number of installments</span>
+                            <span class="fs-6 fw-bold" id="numberOfPayments"></span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span class="fs-6">Amount per installment</span>
+                            <span class="fs-6 fw-bold" id="amountPerInstallment"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <table class="table table-borderless table-striped table-hover table-responsive table-condensed">
+                                <thead class="fs-6 fs-6 fw-light">
+                                    <tr>
+                                        <th class="fs-6 fw-light">
+                                            Payment
+                                        </th>
+                                        <th class="fs-6 fw-light">
+                                            Date
+                                        </th>
+                                        <th class="fs-6 fw-light">
+                                            Principal
+                                        </th>
+                                        <th class="fs-6 fw-light">
+                                            Interest
+                                        </th>
+                                        <th class="fs-6 fw-light">
+                                            Amount
+                                        </th>
+                                        <th class="fs-6 fw-light">
+                                            Beginning Bal.
+                                        </th>
+                                        <th class="fs-6 fw-light">
+                                            Ending Bal.
+                                        </th>
+                                        <th class="fs-6 fw-light">
+                                            Cummulative interest
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                                <tfoot></tfoot>
+                            </table>
+                        </li>
+                    </ul>
+                </div>
+                <div id="printFooter" class="card-footer bg-white">
+                    <div id="previewCardActions" class="btn-group w-100">
+                        <button id="print" role="button" class="btn btn-sm btn-outline-primary">Print</button>
+                        <button id="sendEmail" role="button" class="btn btn-sm btn-outline-primary">Send email</button>
+                    </div>
+                    <form id="emailForm" method="post" class="d-none">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="input-group">
+                                <input class="form-control" placeholder="Email address" name="email" />
+                                <button class="btn btn-sm btn-primary">Send Amortization</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="~/js/amortizationPageAutocompletion.js" asp-append-version="true"></script>
+    <script src="~/js/amortizationPageInstallments.js" asp-append-version="true"></script>
+    <script src="~/js/amortizationPageState.js" asp-append-version="true"></script>
+}
