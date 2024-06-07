@@ -62,9 +62,10 @@
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
 ################################################################################
-# set repo language
+# set repo language to csharp
 ################################################################################
-*wwwroot linguist-vendored
+*/wwwroot/* linguist-vendored
 *.cshtml.cs linguist-language=csharp
-*.cs linguist-language-csharp
+*.cs linguist-language=csharp
+*.js linguist-vendored=true
 # docs/* linguist-documentation
