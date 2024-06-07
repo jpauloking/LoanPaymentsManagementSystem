@@ -64,8 +64,8 @@
 ################################################################################
 # set repo language to csharp
 ################################################################################
-*/wwwroot/* linguist-vendored
-*.cshtml.cs linguist-language=csharp
-*.cs linguist-language=csharp
+*/wwwroot/* linguist-vendored=true
+*.cshtml.cs linguist-language=c#
+*.cs linguist-language=c#
 *.js linguist-vendored=true
 # docs/* linguist-documentation
