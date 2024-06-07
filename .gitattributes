@@ -69,4 +69,6 @@
 *.cs linguist-language=c#
 *.js linguist-vendored=true
 *.css linguist-vendored=true
+*.html linguist-vendored=true
+*.cshtml linguist-vendored=true
 # docs/* linguist-documentation
