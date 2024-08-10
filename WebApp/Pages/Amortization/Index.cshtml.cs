@@ -24,6 +24,7 @@ namespace WebApp.Pages.Amortization
 
         public void OnGet()
         {
+            
         }
 
         public IActionResult OnPostAsync()

@@ -1,0 +1,52 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div asp-validation-summary="ModelOnly" class="login-box-msg text-danger"></div>
+<form id="registerForm" method="post" asp-route-returnUrl="@Model.ReturnUrl">
+    <div class="input-group mb-3">
+        <div class="form-floating">
+            <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
+            <label asp-for="Input.Email"></label>
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+        <div class="input-group-text"> <span class="bi bi-envelope"></span> </div>
+    </div>
+    <div class="input-group mb-3">
+        <div class="form-floating">
+            <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
+            <label asp-for="Input.Password"></label>
+            <span asp-validation-for="Input.Password" class="text-danger"></span>
+        </div>
+        <div class="input-group-text"> <span class="bi bi-lock-fill"></span> </div>
+    </div>
+    <div class="input-group mb-3">
+        <div class="form-floating">
+            <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
+            <label asp-for="Input.ConfirmPassword"></label>
+            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+        </div>
+        <div class="input-group-text"> <span class="bi bi-lock-fill"></span> </div>
+    </div>
+    <!--begin::Row-->
+    <div class="row">
+        <div class="col-8 d-inline-flex align-items-center">
+            <p>
+                <a asp-page="./Login" class="text-center">
+                    Sign in with existing membership
+                </a>
+            </p>
+        </div>
+        <!-- /.col -->
+        <div class="col-4">
+            <div class="d-grid gap-2"> <button type="submit" class="btn btn-primary">Sign Up</button> </div>
+        </div>
+        <!-- /.col -->
+    </div> <!--end::Row-->
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

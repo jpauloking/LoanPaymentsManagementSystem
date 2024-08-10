@@ -3,58 +3,37 @@
 
 @{
     ViewData["Title"] = "Borrowers";
+    ViewData["Path"] = Request.Path;
     bool listHasData = Model.BorrowerListViewModel.Borrowers.Count > 0 && Model.BorrowerListViewModel is not null;
     List<ViewModels.BorrowerViewModel> borrowerTableModel = Model.BorrowerListViewModel!.Borrowers;
 }
 
-<!-- Content Header (Page header) -->
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 class="m-0">Borrowers</h1>
-            </div><!-- /.col -->
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item active"><a href="/Index">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Borrowers</li>
-                </ol>
-            </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-</div>
-<!-- /.content-header -->
-<!-- Main content -->
-<div class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12 d-flex justify-content-end align-items-center">
-                <a asp-page="Create" class="btn btn-outline-primary my-3">Add borrower</a>
-            </div>
-            <div class="col-12">
-                @if (listHasData)
-                {
-                    <div class="card card-primary card-outline">
-                        <div class="card-body">
-                            <partial name="_BorrowerTablePartial" model="borrowerTableModel" />
-                        </div>
-                    </div>
-                }
-                else
-                {
-                    <div class="card card-primary card-outline">
-                        <div class="body">
-                            <div class="text-center d-flex flex-column py-5">
-                                <h5 class="h5 text-center">Borrowers</h5>
-                                <p class="lead">No borrowers at this time.</p>
-                                <a asp-page="/Borrowers/Create" class="text-decoration-none fs-6 fw-light">Create borrower</a>
-                            </div>
-                        </div>
-                    </div>
-                }
-            </div>
-        </div>
+
+<div class="row">
+    <div class="col-12 d-flex justify-content-end align-items-center">
+        <a asp-page="Create" class="btn btn-outline-primary my-3">Add borrower</a>
     </div>
-    <!-- /.container-fluid -->
+    <div class="col-12">
+        @if (listHasData)
+        {
+            <div class="card card-primary card-outline">
+                <div class="card-body">
+                    <partial name="_BorrowerTablePartial" model="borrowerTableModel" />
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="card card-primary card-outline">
+                <div class="body">
+                    <div class="text-center d-flex flex-column py-5">
+                        <h5 class="h5 text-center">Borrowers</h5>
+                        <p class="lead">No borrowers at this time.</p>
+                        <a asp-page="/Borrowers/Create" class="text-decoration-none fs-6 fw-light">Create borrower</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>
-<!-- /.content -->
+

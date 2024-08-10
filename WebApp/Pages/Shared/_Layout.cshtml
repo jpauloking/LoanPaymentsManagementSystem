@@ -1,265 +1,381 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using WebApp.Models;
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Loan Payments Manager</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/lib/icheck-bootstrap//icheck-bootstrap.min.css" asp-append-version="true" />
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="~/lib/bootstrap-icons/font/fonts/bootstrap-icons.woff2" asp-append-version="true" />
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="~/fontawesome-free/css/all.min.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" asp-append-version="true" />
-    <!-- Datatables -->
-    <link rel="stylesheet" href="~/datatables/datatables.css" asp-append-version="true" />
-    <!-- Theme styles -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/adminlte/css/adminlte.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/adminlte/js/adminlte.min.js" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
-<body class="hold-transition sidebar-mini">
-    <!-- ./wrapper -->
-    <div class="wrapper">
-        <!-- Preloader -->
-        <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__wobble" src="~/images/no_image.png" alt="Loan Payments" height="60" width="60">
-        </div>
-        <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-            <!-- Left navbar links -->
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                </li>
-            </ul>
-            <!-- ./Left navbar links -->
-            <!-- Right navbar links -->
-            <ul class="navbar-nav ml-auto">
-                <!-- Navbar Search -->
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-                        <i class="fas fa-search"></i>
-                    </a>
-                    <div class="navbar-search-block">
-                        <form class="form-inline">
-                            <div class="input-group input-group-sm">
-                                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-                                <div class="input-group-append">
-                                    <button class="btn btn-navbar" type="submit">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                    <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </li>
-                <!-- Navbar Search -->
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <!-- Logout -->
-                    <li class="nav-item">
-                        <a class="nav-link" asp-page="/Account/Logout" role="button">
-                            Logout
-                        </a>
-                    </li>
-                    <!-- ./Logout -->
-                }
-                else
-                {
-                    <!-- Login -->
-                    <li class="nav-item">
-                        <a class="nav-link" asp-page="/Account/Login" role="button">
-                            Login
-                        </a>
-                    </li>
-                    <!-- ./Login -->
-                }
-
-            </ul>
-            <!-- ./Right navbar links -->
-        </nav>
-        <!-- /.navbar -->
-        <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <!-- Brand Logo -->
-            <a href="/Index" class="brand-link">
-                <img src="~/images/no_image.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">Loan Payments</span>
-            </a>
-            <!-- Sidebar -->
-            <div class="sidebar">
-                <!-- Sidebar user panel (optional) -->
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                        <div class="image">
-                            <img src="~/images/no_image.png" class="img-circle elevation-2" alt="User Image">
-                        </div>
-                        <div class="info">
-                            <a href="#" class="d-block">@(User?.Identity?.Name)</a>
-                        </div>
-                    </div>
-                }
-                <!-- SidebarSearch Form -->
-                <div class="form-inline mt-3">
-                    <div class="input-group" data-widget="sidebar-search">
-                        <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-                        <div class="input-group-append">
-                            <button class="btn btn-sidebar">
-                                <i class="fas fa-search fa-fw"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Sidebar Menu -->
+<!--begin::Body-->
+<body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+    <!--begin::App Wrapper-->
+    <div class="app-wrapper">
+        <!--begin::Sidebar-->
+        <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+            <!--begin::Sidebar Brand-->
+            <div class="sidebar-brand">
+                <!--begin::Brand Link-->
+                <a asp-page="/Index" class="brand-link">
+                    <!--begin::Brand Image-->
+                    @* <img src="~/images/no_image.png" alt="AdminLTE Logo" class="brand-image opacity-75 shadow"> *@
+                    <!--end::Brand Image-->
+                    <!--begin::Brand Text-->
+                    <span class="brand-text fw-light">Loan Payments</span>
+                    <!--end::Brand Text-->
+                </a> <!--end::Brand Link-->
+            </div>
+            <!--end::Sidebar Brand-->
+            <!--begin::Sidebar Wrapper-->
+            <div class="sidebar-wrapper">
                 <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <!--begin::Sidebar Menu-->
+                    <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
+                        @* <li class="nav-header">DASHBOARD</li> *@
                         <li class="nav-item">
-                            <a asp-page="/Index" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-speedometer"></i>
                                 <p>
                                     Dashboard
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
                                 </p>
                             </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a asp-page="/Index" class="nav-link">
+                                        <i class="nav-icon bi bi-graph-up-arrow"></i>
+                                        <p>Cashflow</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-page="/Index" class="nav-link">
+                                        <i class="nav-icon bi bi-file-bar-graph"></i>
+                                        <p>Summary</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-page="/Index" class="nav-link">
+                                        <i class="nav-icon bi bi-database"></i>
+                                        <p>Database</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
+                        @* <li class="nav-header">APPLICATIONS</li> *@
                         <li class="nav-item">
-                            <a asp-page="/Installments/Index" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-window-desktop"></i>
                                 <p>
-                                    Installments
+                                    Applications
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
                                 </p>
                             </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a asp-page="/CreditAnalysis/Index" class="nav-link">
+                                        <i class="nav-icon bi bi-book"></i>
+                                        <p>Credit Analysis</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-page="/Amortization/Index" class="nav-link">
+                                        <i class="nav-icon bi bi-calculator"></i>
+                                        <p>Loan Amortization</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
+                        @* <li class="nav-header">BORROWERS</li> *@
                         <li class="nav-item">
-                            <a asp-page="/Loans/Index" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    Loans
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-page="/Borrowers/Index" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-person"></i>
                                 <p>
                                     Borrowers
-                                </p>
-                            </a>
-                        </li>
-                        @*<li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Installments
-                                    <i class="right fas fa-angle-left"></i>
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a asp-page="/Installments/Index" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>
-                                            All
-                                            <span class="right badge badge-danger">50</span>
-                                        </p>
+                                    <a asp-page="/Borrowers/Index" asp-route-Category="All-Borrowers" class="nav-link">
+                                        <i class="nav-icon bi bi-card-list"></i>
+                                        <p>All borrowers</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a asp-page="/Installments/Index" asp-route-CategoryName="Active" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Active</p>
+                                    <a asp-page="/Borrowers/Index" asp-route-Category="With-Unpaid-Loans" class="nav-link">
+                                        <i class="nav-icon bi bi-list-task"></i>
+                                        <p>With unpaid</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a asp-page="/Installments/Index" asp-route-CategoryName="Overdue" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Overdue</p>
+                                    <a asp-page="/Borrowers/Index" asp-route-Category="With-Overdue-Loans" class="nav-link">
+                                        <i class="nav-icon bi bi-list-stars"></i>
+                                        <p>With overdue</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-page="/Borrowers/Index" asp-route-Category="With-Paid-Loans" class="nav-link">
+                                        <i class="nav-icon bi bi-list-check"></i>
+                                        <p>With paid</p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
+                        @* <li class="nav-header">LOANS</li> *@
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <i class="nav-icon bi bi-bank"></i>
                                 <p>
                                     Loans
-                                    <i class="right fas fa-angle-left"></i>
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a asp-page="/Loans/Index" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>All</p>
+                                    <a asp-page="/Loans/Index" asp-route-Category="All-Loans" class="nav-link">
+                                        <i class="nav-icon bi bi-card-list"></i>
+                                        <p>All loans</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a asp-page="/Loans/Index" asp-route-CategoryName="Active" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Active</p>
+                                    <a asp-page="/Loans/Index" asp-route-Category="Unpaid-Loans" class="nav-link">
+                                        <i class="nav-icon bi bi-list-task"></i>
+                                        <p>Unpaid loans</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-page="/Loans/Index" asp-route-Category="Overdue-Loans" class="nav-link">
+                                        <i class="nav-icon bi bi-list-stars"></i>
+                                        <p>Overdue loans</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-page="/Loans/Index" asp-route-Category="Paid-Loans" class="nav-link">
+                                        <i class="nav-icon bi bi-list-check"></i>
+                                        <p>Paid loans</p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
+                        @* <li class="nav-header">INSTALLMENTS</li> *@
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <i class="nav-icon bi bi-calendar2-week"></i>
                                 <p>
-                                    Borrowers
-                                    <i class="right fas fa-angle-left"></i>
+                                    Installments
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a asp-page="/Borrowers/Index" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>All</p>
+                                    <a asp-page="/Installments/Index" asp-route-Category="All-Installments" class="nav-link">
+                                        <i class="nav-icon bi bi-card-list"></i>
+                                        <p>All installments</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a asp-page="/Borrowers/Index" asp-route-CategoryName="Active" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Active</p>
+                                    <a asp-page="/Installments/Index" asp-route-Category="Unpaid-Installments" class="nav-link">
+                                        <i class="nav-icon bi bi-list-task"></i>
+                                        <p>Unpaid installments</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-page="/Installments/Index" asp-route-Category="Overdue-Installments" class="nav-link">
+                                        <i class="nav-icon bi bi-list-stars"></i>
+                                        <p>Overdue installments</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-page="/Installments/Index" asp-route-Category="Paid-Installments" class="nav-link">
+                                        <i class="nav-icon bi bi-list-check"></i>
+                                        <p>Paid installments</p>
                                     </a>
                                 </li>
                             </ul>
-                        </li>*@
                     </ul>
+                    <!--end::Sidebar Menu-->
                 </nav>
-                <!-- /.sidebar-menu -->
-
             </div>
-            <!-- /.sidebar -->
+            <!--end::Sidebar Wrapper-->
         </aside>
-        <!-- ./Main Sidebar Container -->
-        <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
-            @RenderBody()
-        </div>
-        <!-- Main Footer -->
-        <footer class="main-footer">
-            <!-- To the right -->
-            <div class="float-right d-none d-sm-inline">
-                Track loan payments easily
+        <!--end::Sidebar-->
+        <!--begin::Main Wrapper-->
+        <div class="app-main-wrapper">
+            <!--begin::Header-->
+            <nav class="app-header navbar navbar-expand bg-body">
+                <!--begin::Container-->
+                <div class="container-fluid">
+                    <!--begin::Start Navbar Links-->
+                    <ul class="navbar-nav">
+                        <li class="nav-item"> <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button"> <i class="bi bi-list"></i> </a> </li>
+                        <li class="nav-item d-none d-md-block"> <a href="#" class="nav-link">Home</a> </li>
+                        <li class="nav-item d-none d-md-block"> <a href="#" class="nav-link">Contact</a> </li>
+                    </ul> <!--end::Start Navbar Links-->
+                    <!--begin::End Navbar Links-->
+                    <ul class="navbar-nav ms-auto">
+                        <!--begin::Navbar Search-->
+                        <li class="nav-item"> <a class="nav-link" data-widget="navbar-search" href="#" role="button"> <i class="bi bi-search"></i> </a> </li> <!--end::Navbar Search-->
+                        <!--begin::Fullscreen Toggle-->
+                        <li class="nav-item"> <a class="nav-link" href="#" data-lte-toggle="fullscreen"> <i data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i> <i data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none;"></i> </a> </li>
+                        <!--end::Fullscreen Toggle-->
+                        <!--begin::User Menu Dropdown-->
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item dropdown user-menu">
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"> <img src="~/images/no_image.png" class="user-image rounded-circle shadow" alt="User Image"> <span class="d-none d-md-inline">@(UserManager.GetUserName(User))</span> </a>
+                                <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+                                    <!--begin::User Image-->
+                                    <li class="user-header text-bg-primary">
+                                        <img src="~/images/no_image.png" class="rounded-circle shadow" alt="User Image">
+                                        <p>
+                                            @(UserManager.GetUserName(User))
+                                            <small>Member since Nov. 2023</small>
+                                        </p>
+                                    </li> 
+                                    <!--end::User Image--> <!--begin::Menu Body-->
+                                    @* <li class="user-body">
+                                        <!--begin::Row-->
+                                        <div class="row">
+                                            <div class="col-4 text-center"> <a href="#">Followers</a> </div>
+                                            <div class="col-4 text-center"> <a href="#">Sales</a> </div>
+                                            <div class="col-4 text-center"> <a href="#">Friends</a> </div>
+                                        </div> 
+                                        <!--end::Row-->
+                                    </li> *@ 
+                                    <!--end::Menu Body-->
+                                    <!--begin::Menu Footer-->
+                                    <li class="user-footer">
+                                        <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                        <a asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })" class="btn btn-default btn-flat float-end">Sign out</a>
+                                    </li>
+                                    <!--end::Menu Footer-->
+                                </ul>
+                            </li>
+                        }
+                        <!--end::User Menu Dropdown-->
+                    </ul> <!--end::End Navbar Links-->
+                </div> <!--end::Container-->
+            </nav>
+            <!--end::Header-->
+            <!--begin::App Main-->
+            <main class="app-main">
+                <!--begin::App Content Header-->
+                <div class="app-content-header">
+                    <!--begin::Container-->
+                    <div class="container-fluid">
+                        <!--begin::Row-->
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <h3 class="mb-0">@(ViewData["Title"])</h3>
+                            </div>
+                            <div class="col-sm-4">
+                                <ol class="breadcrumb float-sm-end">
+                                    @if (ViewData["Path"] is not null)
+                                    {
+                                        foreach (var path in ViewData["Path"].ToString().Split("/"))
+                                        {
+                                            if (path == "/")
+                                            {
+                                                <li class="breadcrumb-item"><a asp-page="/Index">Dashboard</a></li>
+                                            }
+                                            else
+                                            {
+                                                <li class="breadcrumb-item active" aria-current="page">
+                                                    @path
+                                                </li>
+                                            }
+                                        }
+                                    }
+                                </ol>
+                            </div>
+                        </div> <!--end::Row-->
+                    </div> <!--end::Container-->
+                </div> <!--end::App Content Header--> <!--begin::App Content-->
+                <div class="app-content">
+                    <!--begin::Container-->
+                    <div class="container-fluid">
+                        <!--begin::Row-->
+                        <div class="row">
+                            <div class="col-12">
+                                @RenderBody()
+                            </div>
+                        </div>
+                        <!--end::Row-->
+                    </div>
+                    <!--end::Container-->
+                </div>
+                <!--end::App Content-->
+            </main>
+            <!--begin::Create Admin Content-->
+            @* <div class="app-content-bottom-area">
+            <div class="row">
+            <div class="col-12 text-end"> <button type="submit" class="btn btn-primary" name="save" value="create">Create Admin</button> </div>
             </div>
-            <!-- Default to the left -->
-            <strong>Copyright &copy; 2023 <a href="/Index">Loan Payments</a>.</strong> All rights reserved.
-        </footer>
-        <!--./ Main Footer -->
+            </div> *@
+            <!--end::Create Admin Content-->
+            <!--end::App Main-->
+            <!--begin::Footer-->
+            <footer class="app-footer">
+                <!--begin::To the end-->
+                @* <div class="float-end d-none d-sm-inline">Anything you want</div> *@
+                <!--end::To the end-->
+                <!--begin::Copyright-->
+                <div class="float-end d-none d-sm-inline">
+                    <small>
+                        Copyright &copy; 2014-2024&nbsp;<a href="https://adminlte.io" class="text-decoration-none">AdminLTE.io</a>.
+                    </small>
+                    All rights reserved.
+                </div>
+                <!--end::Copyright-->
+            </footer>
+            <!--end::Footer-->
+        </div>
+        <!--end::Main Wrapper-->
     </div>
-    <!-- ./wrapper -->
+    <!--end::App Wrapper-->
+    <!--begin::Script-->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="~/datatables/datatables.js" asp-append-version="true"></script>
+    <script src="~/lib/adminlte/js/adminlte.min.js" asp-append-version="true"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/js/plugins-init.js" asp-append-version="true"></script>
-
+    <!--begin::OverlayScrollbars Configure-->
+    <!--end::OverlayScrollbars Configure-->
+    <!--begin::Validation Scripts Section-->
     @await RenderSectionAsync("Scripts", required: false)
+    <!--end::Validation Scripts Section-->
+    <script>
+        const SELECTOR_SIDEBAR_WRAPPER = ".sidebar-wrapper";
+        const Default = {
+            scrollbarTheme: "os-theme-light",
+            scrollbarAutoHide: "leave",
+            scrollbarClickScroll: true,
+        };
+        document.addEventListener("DOMContentLoaded", function () {
+            const sidebarWrapper = document.querySelector(SELECTOR_SIDEBAR_WRAPPER);
+            if (
+                sidebarWrapper &&
+                typeof OverlayScrollbarsGlobal?.OverlayScrollbars !== "undefined"
+            ) {
+                OverlayScrollbarsGlobal.OverlayScrollbars(sidebarWrapper, {
+                    scrollbars: {
+                        theme: Default.scrollbarTheme,
+                        autoHide: Default.scrollbarAutoHide,
+                        clickScroll: Default.scrollbarClickScroll,
+                    },
+                });
+            }
+        });
+    </script>
+    <!--end::Script-->
 </body>
+<!--end::Body-->
 </html>
