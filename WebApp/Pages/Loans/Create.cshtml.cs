@@ -152,7 +152,6 @@ namespace WebApp.Pages.Loans
         private List<InstallmentViewModel> CreateInstallments()
         {
             List<InstallmentViewModel> installments = new();
-            int numberOfInstallments = LoanCreateViewModel.Loan.NumberOfInstallments;
             int durationInDays = LoanCreateViewModel.Loan.DurationInDays;
             decimal principal = LoanCreateViewModel.Loan.Principal;
             decimal amountPerInstallment = LoanCreateViewModel.Loan.AmountPerInstallment;
@@ -163,6 +162,7 @@ namespace WebApp.Pages.Loans
             decimal dailyInterest = (principal * (decimal)interestRate) / 30;
             decimal interestAccrued = dailyInterest * durationInDays;
             decimal amountDue = interestAccrued + principal;
+            int numberOfInstallments = (int)Math.Ceiling(amountDue / amountPerInstallment);
             decimal runningBalance = amountDue;
             decimal cummulativeInterest;
             decimal interestPayablePerInstallment;
@@ -195,6 +195,7 @@ namespace WebApp.Pages.Loans
 
                 installments.Add(new()
                 {
+                    Id = Guid.NewGuid(),
                     PaymentNumber = numberOfInstallmentsCreated,
                     DateDue = dateOpened.AddDays(daysSinceDateOpened),
                     Amount = amountPayablePerInstallment,

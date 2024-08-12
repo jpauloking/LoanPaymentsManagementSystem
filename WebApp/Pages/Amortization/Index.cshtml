@@ -4,18 +4,8 @@
     ViewData["Title"] = "Amortization";
 }
 
-<section id="pageContent" class="row">
-    <div class="col-md-5">
-        <ul class="list-group">
-            <li class="list-group-item">
-                <a asp-page="/Index" class="text-decoration-none fs-6 fw-light">Back to dashboard</a>
-            </li>
-            <li id="backButtonForPreview" class="list-group-item d-none">
-                <a asp-page="Index" class="text-decoration-none fs-6 fw-light">Back</a>
-            </li>
-        </ul>
-    </div>
-    <div id="form" class="col-md-7">
+<section id="pageContent" class="row justify-content-center align-items-start">
+    <div id="form" class="col-md-10">
         <form method="post">
             <div class="row">
                 <div class="col-12">
@@ -211,7 +201,4 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    <script src="~/js/amortizationPageAutocompletion.js" asp-append-version="true"></script>
-    <script src="~/js/amortizationPageInstallments.js" asp-append-version="true"></script>
-    <script src="~/js/amortizationPageState.js" asp-append-version="true"></script>
 }

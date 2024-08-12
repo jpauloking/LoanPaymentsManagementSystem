@@ -8,187 +8,162 @@
     string placeholderImageFileName = "no_image.png";
 }
 
-<div class="content">
-    <div class="container-fluid">
-        <div class="row row-cols-md-2 py-2">
-            <div class="col-md-4 mx-auto">
-                <div class="card mb-3">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <a asp-page="Details" asp-route-ID="@Model.BorrowerEditViewModel.Borrower.Id" class="text-decoration-none fs-6 fw-light">Back to @(Model.BorrowerEditViewModel.Borrower.FirstName)  @(Model.BorrowerEditViewModel.Borrower.LastName)'s details</a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#bio" class="text-decoration-none fs-6 fw-light">Bio</a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#identification" class="text-decoration-none fs-6 fw-light">Identification</a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#contact" class="text-decoration-none fs-6 fw-light">Contact</a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#location" class="text-decoration-none fs-6 fw-light">Location</a>
-                        </li>
-                    </ul>
+<div class="row row-cols-md-2 justify-content-center align-items-start py-2">
+    <div class="col-md-10 mx-auto">
+        <form method="post" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-12">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 </div>
             </div>
-            <div class="col-md-8 mx-auto">
-                <form method="post" enctype="multipart/form-data">
+            <div id="bio" class="card card-primary card-outline mb-3">
+                <div class="card-header bg-white">
+                    <h2 class="card-title h4 fw-lighter">Bio</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label asp-for="BorrowerEditViewModel.Borrower.FirstName" class="form-label"></label>
+                            <input asp-for="BorrowerEditViewModel.Borrower.FirstName" class="form-control" />
+                            <span asp-validation-for="BorrowerEditViewModel.Borrower.FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="BorrowerEditViewModel.Borrower.LastName" class="form-label"></label>
+                            <input asp-for="BorrowerEditViewModel.Borrower.LastName" class="form-control" />
+                            <span asp-validation-for="BorrowerEditViewModel.Borrower.LastName" class="text-danger"></span>
+                        </div>
+                        <div class="col-12">
+                            <label asp-for="BorrowerEditViewModel.Borrower.Occupation" class="form-label"></label>
+                            <input asp-for="BorrowerEditViewModel.Borrower.Occupation" class="form-control" />
+                            <span asp-validation-for="BorrowerEditViewModel.Borrower.Occupation" class="text-danger"></span>
+                        </div>
+                        <div class="col-12">
+                            <label asp-for="BorrowerEditViewModel.Borrower.Company" class="form-label"></label>
+                            <input asp-for="BorrowerEditViewModel.Borrower.Company" class="form-control" />
+                            <span asp-validation-for="BorrowerEditViewModel.Borrower.Company" class="text-danger"></span>
+                        </div>
+                        <div class="col-12">
+                            <div class="row align-items-end mt-3">
+                                <div class="col-10">
+                                    <label asp-for="BorrowerEditViewModel.Borrower.DisplayPictureURL" class="form-label"></label>
+                                    <input type="hidden" asp-for="BorrowerEditViewModel.Borrower.DisplayPictureURL" class="form-control" />
+                                    <input asp-for="BorrowerEditViewModel.DisplayPictureFile" class="form-control" />
+                                    <span asp-validation-for="BorrowerEditViewModel.Borrower.DisplayPictureURL" class="text-danger"></span>
+                                </div>
+                                <div class="col-2">
+                                    <img src="~/images/borrowers/@(Model.BorrowerEditViewModel.Borrower.DisplayPictureURL ?? placeholderImageFileName)" alt="" class="img-fluid img-thumbnail" asp-append-version="true" width="100" height="150" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="identification" class="card mb-3">
+                <div class="card-header bg-white">
+                    <h2 class="card-title h4 fw-lighter">Identification</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label asp-for="BorrowerEditViewModel.Borrower.IdentificationDocumentType" class="form-label"></label>
+                            <select asp-for="BorrowerEditViewModel.Borrower.IdentificationDocumentType" asp-items="Html.GetEnumSelectList<IdentificationDocumentType>()" class="form-control select-field"></select>
+                            <span asp-validation-for="BorrowerEditViewModel.Borrower.IdentificationDocumentType" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="BorrowerEditViewModel.Borrower.IdentificationDocumentNumber" class="form-label"></label>
+                            <input asp-for="BorrowerEditViewModel.Borrower.IdentificationDocumentNumber" class="form-control" />
+                            <span asp-validation-for="BorrowerEditViewModel.Borrower.IdentificationDocumentNumber" class="text-danger"></span>
+                        </div>
+                        <div class="col-12">
+                            <div class="row align-items-end mt-3">
+                                <div class="col-10">
+                                    <label asp-for="BorrowerEditViewModel.Borrower.IdentificationDocumentURL" class="form-label"></label>
+                                    <input type="hidden" asp-for="BorrowerEditViewModel.Borrower.IdentificationDocumentURL" class="form-control" />
+                                    <input asp-for="BorrowerEditViewModel.IdentificationDocumentFile" class="form-control" />
+                                    <span asp-validation-for="BorrowerEditViewModel.Borrower.IdentificationDocumentURL" class="text-danger"></span>
+                                </div>
+                                <div class="col-2">
+                                    <img src="~/images/documents/@(Model.BorrowerEditViewModel.Borrower.IdentificationDocumentURL ?? placeholderImageFileName)" alt="" class="img-fluid img-thumbnail" asp-append-version="true" width="100" height="150" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="contact" class="card mb-3">
+                <div class="card-header bg-white">
+                    <h2 class="card-title h4 fw-lighter">Contact</h2>
+                </div>
+                <div class="card-body">
                     <div class="row">
                         <div class="col-12">
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <label asp-for="BorrowerEditViewModel.Borrower.Email" class="form-label"></label>
+                            <input asp-for="BorrowerEditViewModel.Borrower.Email" class="form-control" />
+                            <span asp-validation-for="BorrowerEditViewModel.Borrower.Email" class="text-danger"></span>
+                        </div>
+                        <div class="col-12">
+                            <label asp-for="BorrowerEditViewModel.Borrower.Phone" class="form-label"></label>
+                            <input asp-for="BorrowerEditViewModel.Borrower.Phone" class="form-control" />
+                            <span asp-validation-for="BorrowerEditViewModel.Borrower.Phone" class="text-danger"></span>
+                        </div>
+                        <div class="col-12">
+                            <label asp-for="BorrowerEditViewModel.Borrower.Address" class="form-label"></label>
+                            <textarea asp-for="BorrowerEditViewModel.Borrower.Address" class="form-control"></textarea>
+                            <span asp-validation-for="BorrowerEditViewModel.Borrower.Address" class="text-danger"></span>
                         </div>
                     </div>
-                    <div id="bio" class="card card-primary card-outline mb-3">
-                        <div class="card-header bg-white">
-                            <h2 class="card-title h4 fw-lighter">Bio</h2>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label asp-for="BorrowerEditViewModel.Borrower.FirstName" class="form-label"></label>
-                                    <input asp-for="BorrowerEditViewModel.Borrower.FirstName" class="form-control" />
-                                    <span asp-validation-for="BorrowerEditViewModel.Borrower.FirstName" class="text-danger"></span>
-                                </div>
-                                <div class="col-md-6">
-                                    <label asp-for="BorrowerEditViewModel.Borrower.LastName" class="form-label"></label>
-                                    <input asp-for="BorrowerEditViewModel.Borrower.LastName" class="form-control" />
-                                    <span asp-validation-for="BorrowerEditViewModel.Borrower.LastName" class="text-danger"></span>
-                                </div>
-                                <div class="col-12">
-                                    <label asp-for="BorrowerEditViewModel.Borrower.Occupation" class="form-label"></label>
-                                    <input asp-for="BorrowerEditViewModel.Borrower.Occupation" class="form-control" />
-                                    <span asp-validation-for="BorrowerEditViewModel.Borrower.Occupation" class="text-danger"></span>
-                                </div>
-                                <div class="col-12">
-                                    <label asp-for="BorrowerEditViewModel.Borrower.Company" class="form-label"></label>
-                                    <input asp-for="BorrowerEditViewModel.Borrower.Company" class="form-control" />
-                                    <span asp-validation-for="BorrowerEditViewModel.Borrower.Company" class="text-danger"></span>
-                                </div>
-                                <div class="col-12">
-                                    <div class="row align-items-end mt-3">
-                                        <div class="col-10">
-                                            <label asp-for="BorrowerEditViewModel.Borrower.DisplayPictureURL" class="form-label"></label>
-                                            <input type="hidden" asp-for="BorrowerEditViewModel.Borrower.DisplayPictureURL" class="form-control" />
-                                            <input asp-for="BorrowerEditViewModel.DisplayPictureFile" class="form-control" />
-                                            <span asp-validation-for="BorrowerEditViewModel.Borrower.DisplayPictureURL" class="text-danger"></span>
-                                        </div>
-                                        <div class="col-2">
-                                            <img src="~/images/borrowers/@(Model.BorrowerEditViewModel.Borrower.DisplayPictureURL ?? placeholderImageFileName)" alt="" class="img-fluid img-thumbnail" asp-append-version="true" width="100" height="150" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="identification" class="card mb-3">
-                        <div class="card-header bg-white">
-                            <h2 class="card-title h4 fw-lighter">Identification</h2>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label asp-for="BorrowerEditViewModel.Borrower.IdentificationDocumentType" class="form-label"></label>
-                                    <select asp-for="BorrowerEditViewModel.Borrower.IdentificationDocumentType" asp-items="Html.GetEnumSelectList<IdentificationDocumentType>()" class="form-control select-field"></select>
-                                    <span asp-validation-for="BorrowerEditViewModel.Borrower.IdentificationDocumentType" class="text-danger"></span>
-                                </div>
-                                <div class="col-md-6">
-                                    <label asp-for="BorrowerEditViewModel.Borrower.IdentificationDocumentNumber" class="form-label"></label>
-                                    <input asp-for="BorrowerEditViewModel.Borrower.IdentificationDocumentNumber" class="form-control" />
-                                    <span asp-validation-for="BorrowerEditViewModel.Borrower.IdentificationDocumentNumber" class="text-danger"></span>
-                                </div>
-                                <div class="col-12">
-                                    <div class="row align-items-end mt-3">
-                                        <div class="col-10">
-                                            <label asp-for="BorrowerEditViewModel.Borrower.IdentificationDocumentURL" class="form-label"></label>
-                                            <input type="hidden" asp-for="BorrowerEditViewModel.Borrower.IdentificationDocumentURL" class="form-control" />
-                                            <input asp-for="BorrowerEditViewModel.IdentificationDocumentFile" class="form-control" />
-                                            <span asp-validation-for="BorrowerEditViewModel.Borrower.IdentificationDocumentURL" class="text-danger"></span>
-                                        </div>
-                                        <div class="col-2">
-                                            <img src="~/images/documents/@(Model.BorrowerEditViewModel.Borrower.IdentificationDocumentURL ?? placeholderImageFileName)" alt="" class="img-fluid img-thumbnail" asp-append-version="true" width="100" height="150" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="contact" class="card mb-3">
-                        <div class="card-header bg-white">
-                            <h2 class="card-title h4 fw-lighter">Contact</h2>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12">
-                                    <label asp-for="BorrowerEditViewModel.Borrower.Email" class="form-label"></label>
-                                    <input asp-for="BorrowerEditViewModel.Borrower.Email" class="form-control" />
-                                    <span asp-validation-for="BorrowerEditViewModel.Borrower.Email" class="text-danger"></span>
-                                </div>
-                                <div class="col-12">
-                                    <label asp-for="BorrowerEditViewModel.Borrower.Phone" class="form-label"></label>
-                                    <input asp-for="BorrowerEditViewModel.Borrower.Phone" class="form-control" />
-                                    <span asp-validation-for="BorrowerEditViewModel.Borrower.Phone" class="text-danger"></span>
-                                </div>
-                                <div class="col-12">
-                                    <label asp-for="BorrowerEditViewModel.Borrower.Address" class="form-label"></label>
-                                    <textarea asp-for="BorrowerEditViewModel.Borrower.Address" class="form-control"></textarea>
-                                    <span asp-validation-for="BorrowerEditViewModel.Borrower.Address" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="location" class="card mb-3">
-                        <div class="card-header bg-white">
-                            <h2 class="card-title h4 fw-lighter">Location</h2>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12">
-                                    <label asp-for="BorrowerEditViewModel.Borrower.Country" class="form-label"></label>
-                                    <input asp-for="BorrowerEditViewModel.Borrower.Country" class="form-control" />
-                                    <span asp-validation-for="BorrowerEditViewModel.Borrower.Country" class="text-danger"></span>
-                                </div>
-                                <div class="col-12">
-                                    <label asp-for="BorrowerEditViewModel.Borrower.City" class="form-label"></label>
-                                    <input asp-for="BorrowerEditViewModel.Borrower.City" class="form-control" />
-                                    <span asp-validation-for="BorrowerEditViewModel.Borrower.City" class="text-danger"></span>
-                                </div>
-                                <div class="col-md-4">
-                                    <label asp-for="BorrowerEditViewModel.Borrower.County" class="form-label"></label>
-                                    <input asp-for="BorrowerEditViewModel.Borrower.County" class="form-control" />
-                                    <span asp-validation-for="BorrowerEditViewModel.Borrower.County" class="text-danger"></span>
-                                </div>
-                                <div class="col-md-4">
-                                    <label asp-for="BorrowerEditViewModel.Borrower.Subcounty" class="form-label"></label>
-                                    <input asp-for="BorrowerEditViewModel.Borrower.Subcounty" class="form-control" />
-                                    <span asp-validation-for="BorrowerEditViewModel.Borrower.Subcounty" class="text-danger"></span>
-                                </div>
-                                <div class="col-md-4">
-                                    <label asp-for="BorrowerEditViewModel.Borrower.Village" class="form-label"></label>
-                                    <input asp-for="BorrowerEditViewModel.Borrower.Village" class="form-control" />
-                                    <span asp-validation-for="BorrowerEditViewModel.Borrower.Village" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <div class="row py-2">
-                                <div class="col-md-6">
-                                    <input type="submit" value="Update" class="form-control btn btn-primary" />
-                                </div>
-                                <div class="col-md-6">
-                                    <a asp-page="Index" class="btn btn-outline-primary w-100">Cancel</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+                </div>
             </div>
-        </div>
+            <div id="location" class="card mb-3">
+                <div class="card-header bg-white">
+                    <h2 class="card-title h4 fw-lighter">Location</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <label asp-for="BorrowerEditViewModel.Borrower.Country" class="form-label"></label>
+                            <input asp-for="BorrowerEditViewModel.Borrower.Country" class="form-control" />
+                            <span asp-validation-for="BorrowerEditViewModel.Borrower.Country" class="text-danger"></span>
+                        </div>
+                        <div class="col-12">
+                            <label asp-for="BorrowerEditViewModel.Borrower.City" class="form-label"></label>
+                            <input asp-for="BorrowerEditViewModel.Borrower.City" class="form-control" />
+                            <span asp-validation-for="BorrowerEditViewModel.Borrower.City" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="BorrowerEditViewModel.Borrower.County" class="form-label"></label>
+                            <input asp-for="BorrowerEditViewModel.Borrower.County" class="form-control" />
+                            <span asp-validation-for="BorrowerEditViewModel.Borrower.County" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="BorrowerEditViewModel.Borrower.Subcounty" class="form-label"></label>
+                            <input asp-for="BorrowerEditViewModel.Borrower.Subcounty" class="form-control" />
+                            <span asp-validation-for="BorrowerEditViewModel.Borrower.Subcounty" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="BorrowerEditViewModel.Borrower.Village" class="form-label"></label>
+                            <input asp-for="BorrowerEditViewModel.Borrower.Village" class="form-control" />
+                            <span asp-validation-for="BorrowerEditViewModel.Borrower.Village" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row py-2">
+                        <div class="col-md-6">
+                            <input type="submit" value="Update" class="form-control btn btn-primary" />
+                        </div>
+                        <div class="col-md-6">
+                            <a asp-page="Details" asp-route-ID="@Model.BorrowerEditViewModel.Borrower.Id" class="btn btn-outline-primary w-100">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
-    <!-- /.container-fluid -->
 </div>
+
 
 @section Scripts {
     @{

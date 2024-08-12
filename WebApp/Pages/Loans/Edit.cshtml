@@ -5,195 +5,175 @@
     ViewData["Title"] = "Edit Loan";
     ViewData["Path"] = Request.Path;
 }
-<!-- Main content -->
-<div class="content">
-    <div class="container-fluid">
-        <div class="row row-cols-md-2">
-            <div class="col-md-4">
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <a asp-page="Details" asp-route-ID="@Model.LoanEditViewModel.Loan.Id" class="text-decoration-none fs-6 fw-light">Back to loan [@(Model.LoanEditViewModel.Loan.LoanNumber)]</a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="#loan" class="text-decoration-none fs-6 fw-light">Loan</a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="#loan-status" class="text-decoration-none fs-6 fw-light">Loan status</a>
-                    </li>
-                </ul>
+
+<div class="row row-cols-md-2 justify-content-center align-items-start">
+    <div class="col-md-10">
+        <form method="post">
+            <div class="row">
+                <div class="col-12">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                </div>
             </div>
-            <div class="col-md-8">
-                <form method="post">
+            <div id="loan" class="card card-primary card-outline mb-3">
+                <div class="card-header bg-white">
+                    <div>
+                        <label asp-for="LoanEditViewModel.Loan.LoanNumber" class="form-label card-title h4 fw-lighter">
+                        </label>
+                        <input readonly asp-for="LoanEditViewModel.Loan.LoanNumber" class="form-control" />
+                        <span asp-validation-for="LoanEditViewModel.Loan.LoanNumber" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="card-body">
                     <div class="row">
-                        <div class="col-12">
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="col-md-12">
+                            <label asp-for="LoanEditViewModel.Loan.DateOpened" class="form-label"></label>
+                            <input readonly asp-for="LoanEditViewModel.Loan.DateOpened" class="form-control" />
+                            <span asp-validation-for="LoanEditViewModel.Loan.DateOpened" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-12">
+                            <label asp-for="LoanEditViewModel.Loan.Principal" class="form-label"></label>
+                            <input readonly asp-for="LoanEditViewModel.Loan.Principal" class="form-control" />
+                            <span asp-validation-for="LoanEditViewModel.Loan.Principal" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="LoanEditViewModel.Loan.DurationInDays" class="form-label"></label>
+                            <input readonly asp-for="LoanEditViewModel.Loan.DurationInDays" class="form-control" />
+                            <span asp-validation-for="LoanEditViewModel.Loan.DurationInDays" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="LoanEditViewModel.Loan.InterestRate" class="form-label"></label>
+                            <input readonly asp-for="LoanEditViewModel.Loan.InterestRate" class="form-control" />
+                            <span asp-validation-for="LoanEditViewModel.Loan.InterestRate" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="LoanEditViewModel.Loan.NumberOfInstallments" class="form-label"></label>
+                            <input readonly asp-for="LoanEditViewModel.Loan.NumberOfInstallments" class="form-control" />
+                            <span asp-validation-for="LoanEditViewModel.Loan.NumberOfInstallments" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="LoanEditViewModel.Loan.PercentagePenaltyFeePerDayOverDue" class="form-label"></label>
+                            <input readonly asp-for="LoanEditViewModel.Loan.PercentagePenaltyFeePerDayOverDue" class="form-control" />
+                            <span asp-validation-for="LoanEditViewModel.Loan.PercentagePenaltyFeePerDayOverDue" class="text-danger"></span>
                         </div>
                     </div>
-                    <div id="loan" class="card card-primary card-outline mb-3">
-                        <div class="card-header bg-white">
-                            <div>
-                                <label asp-for="LoanEditViewModel.Loan.LoanNumber" class="form-label card-title h4 fw-lighter">
-                                </label>
-                                <input readonly asp-for="LoanEditViewModel.Loan.LoanNumber" class="form-control" />
-                                <span asp-validation-for="LoanEditViewModel.Loan.LoanNumber" class="text-danger"></span>
-                            </div>
+                </div>
+            </div>
+            <div id="loan-status" class="card mb-3">
+                <div class="card-body">
+                    <nav>
+                        <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                            <button class="nav-link  active fs-6 fw-light" id="nav-payment-status-tab" data-bs-toggle="tab" data-bs-target="#nav-payment-status" type="button" role="tab" aria-controls="nav-payment-status" aria-selected="true">Payment Status</button>
+                            <button class="nav-link fs-6 fw-light" id="nav-overdue-status-tab" data-bs-toggle="tab" data-bs-target="#nav-overdue-status" type="button" role="tab" aria-controls="nav-overdue-status" aria-selected="false">Overdue Status</button>
+                            <button class="nav-link fs-6 fw-light" id="nav-written-off-status-tab" data-bs-toggle="tab" data-bs-target="#nav-written-off-status" type="button" role="tab" aria-controls="nav-written-off-status" aria-selected="false">Written-off Status</button>
+                            <button class="nav-link fs-6 fw-light" id="nav-scrapped-off-status-tab" data-bs-toggle="tab" data-bs-target="#nav-scrapped-off-status" type="button" role="tab" aria-controls="nav-scrapped-off-status" aria-selected="false">Scrapped-off Status</button>
                         </div>
-                        <div class="card-body">
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-payment-status" role="tabpanel" aria-labelledby="nav-payment-status-tab">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label asp-for="LoanEditViewModel.Loan.DateOpened" class="form-label"></label>
-                                    <input readonly asp-for="LoanEditViewModel.Loan.DateOpened" class="form-control" />
-                                    <span asp-validation-for="LoanEditViewModel.Loan.DateOpened" class="text-danger"></span>
+                                    <div class="form-check">
+                                        <input asp-for="LoanEditViewModel.Loan.IsPaid" class="form-check-input" />
+                                        <label asp-for="LoanEditViewModel.Loan.IsPaid" class="form-check-label"></label>
+                                        <span asp-validation-for="LoanEditViewModel.Loan.IsPaid" class="text-danger"></span>
+                                    </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <label asp-for="LoanEditViewModel.Loan.DatePaid" class="form-label"></label>
+                                    <input asp-for="LoanEditViewModel.Loan.DatePaid" class="form-control" />
+                                    <span asp-validation-for="LoanEditViewModel.Loan.DatePaid" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="LoanEditViewModel.Loan.PaidBy" class="form-label"></label>
+                                    <input asp-for="LoanEditViewModel.Loan.PaidBy" class="form-control" />
+                                    <span asp-validation-for="LoanEditViewModel.Loan.PaidBy" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade show" id="nav-overdue-status" role="tabpanel" aria-labelledby="nav-overdue-status-tab">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input asp-for="LoanEditViewModel.Loan.IsOverDue" class="form-check-input" />
+                                        <label asp-for="LoanEditViewModel.Loan.IsOverDue" class="form-check-label"></label>
+                                        <span asp-validation-for="LoanEditViewModel.Loan.IsOverDue" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="LoanEditViewModel.Loan.DaysOverDueBy" class="form-label"></label>
+                                    <input asp-for="LoanEditViewModel.Loan.DaysOverDueBy" class="form-control" />
+                                    <span asp-validation-for="LoanEditViewModel.Loan.DaysOverDueBy" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade show" id="nav-written-off-status" role="tabpanel" aria-labelledby="nav-written-off-status-tab">
+                            <div class="row">
                                 <div class="col-md-12">
-                                    <label asp-for="LoanEditViewModel.Loan.Principal" class="form-label"></label>
-                                    <input readonly asp-for="LoanEditViewModel.Loan.Principal" class="form-control" />
-                                    <span asp-validation-for="LoanEditViewModel.Loan.Principal" class="text-danger"></span>
+                                    <div class="form-check">
+                                        <input asp-for="LoanEditViewModel.Loan.IsWrittenOff" class="form-check-input" />
+                                        <label asp-for="LoanEditViewModel.Loan.IsWrittenOff" class="form-check-label"></label>
+                                        <span asp-validation-for="LoanEditViewModel.Loan.IsWrittenOff" class="text-danger"></span>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <label asp-for="LoanEditViewModel.Loan.DurationInDays" class="form-label"></label>
-                                    <input readonly asp-for="LoanEditViewModel.Loan.DurationInDays" class="form-control" />
-                                    <span asp-validation-for="LoanEditViewModel.Loan.DurationInDays" class="text-danger"></span>
+                                    <label asp-for="LoanEditViewModel.Loan.DateWrittenOff" class="form-label"></label>
+                                    <input asp-for="LoanEditViewModel.Loan.DateWrittenOff" class="form-control" />
+                                    <span asp-validation-for="LoanEditViewModel.Loan.DateWrittenOff" class="text-danger"></span>
                                 </div>
                                 <div class="col-md-6">
-                                    <label asp-for="LoanEditViewModel.Loan.InterestRate" class="form-label"></label>
-                                    <input readonly asp-for="LoanEditViewModel.Loan.InterestRate" class="form-control" />
-                                    <span asp-validation-for="LoanEditViewModel.Loan.InterestRate" class="text-danger"></span>
+                                    <label asp-for="LoanEditViewModel.Loan.WrittenOffBy" class="form-label"></label>
+                                    <input asp-for="LoanEditViewModel.Loan.WrittenOffBy" class="form-control" />
+                                    <span asp-validation-for="LoanEditViewModel.Loan.WrittenOffBy" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade show" id="nav-scrapped-off-status" role="tabpanel" aria-labelledby="nav-scrapped-off-status-tab">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input asp-for="LoanEditViewModel.Loan.IsScrappedOff" class="form-check-input" />
+                                        <label asp-for="LoanEditViewModel.Loan.IsScrappedOff" class="form-check-label"></label>
+                                        <span asp-validation-for="LoanEditViewModel.Loan.IsScrappedOff" class="text-danger"></span>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <label asp-for="LoanEditViewModel.Loan.NumberOfInstallments" class="form-label"></label>
-                                    <input readonly asp-for="LoanEditViewModel.Loan.NumberOfInstallments" class="form-control" />
-                                    <span asp-validation-for="LoanEditViewModel.Loan.NumberOfInstallments" class="text-danger"></span>
+                                    <label asp-for="LoanEditViewModel.Loan.PercentageScrappedOff" class="form-label"></label>
+                                    <input asp-for="LoanEditViewModel.Loan.PercentageScrappedOff" class="form-control" />
+                                    <span asp-validation-for="LoanEditViewModel.Loan.PercentageScrappedOff" class="text-danger"></span>
                                 </div>
                                 <div class="col-md-6">
-                                    <label asp-for="LoanEditViewModel.Loan.PercentagePenaltyFeePerDayOverDue" class="form-label"></label>
-                                    <input readonly asp-for="LoanEditViewModel.Loan.PercentagePenaltyFeePerDayOverDue" class="form-control" />
-                                    <span asp-validation-for="LoanEditViewModel.Loan.PercentagePenaltyFeePerDayOverDue" class="text-danger"></span>
+                                    <label asp-for="LoanEditViewModel.Loan.DateScrappedOff" class="form-label"></label>
+                                    <input asp-for="LoanEditViewModel.Loan.DateScrappedOff" class="form-control" />
+                                    <span asp-validation-for="LoanEditViewModel.Loan.DateScrappedOff" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="LoanEditViewModel.Loan.ScrappedOffBy" class="form-label"></label>
+                                    <input asp-for="LoanEditViewModel.Loan.ScrappedOffBy" class="form-control" />
+                                    <span asp-validation-for="LoanEditViewModel.Loan.ScrappedOffBy" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div id="loan-status" class="card mb-3">
-                        <div class="card-header bg-white">
-                            <nav>
-                                <div class="nav nav-tabs nav-justified card-header-tabs" id="nav-tab" role="tablist">
-                                    <button class="nav-link  active fs-6 fw-light" id="nav-payment-status-tab" data-bs-toggle="tab" data-bs-target="#nav-payment-status" type="button" role="tab" aria-controls="nav-payment-status" aria-selected="true">Payment Status</button>
-                                    <button class="nav-link fs-6 fw-light" id="nav-overdue-status-tab" data-bs-toggle="tab" data-bs-target="#nav-overdue-status" type="button" role="tab" aria-controls="nav-overdue-status" aria-selected="false">Overdue Status</button>
-                                    <button class="nav-link fs-6 fw-light" id="nav-written-off-status-tab" data-bs-toggle="tab" data-bs-target="#nav-written-off-status" type="button" role="tab" aria-controls="nav-written-off-status" aria-selected="false">Written-off Status</button>
-                                    <button class="nav-link fs-6 fw-light" id="nav-scrapped-off-status-tab" data-bs-toggle="tab" data-bs-target="#nav-scrapped-off-status" type="button" role="tab" aria-controls="nav-scrapped-off-status" aria-selected="false">Scrapped-off Status</button>
-                                </div>
-                            </nav>
-                        </div>
-                        <div class="card-body">
-                            <div class="tab-content" id="nav-tabContent">
-                                <div class="tab-pane fade show active" id="nav-payment-status" role="tabpanel" aria-labelledby="nav-payment-status-tab">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-check">
-                                                <input asp-for="LoanEditViewModel.Loan.IsPaid" class="form-check-input" />
-                                                <label asp-for="LoanEditViewModel.Loan.IsPaid" class="form-check-label"></label>
-                                                <span asp-validation-for="LoanEditViewModel.Loan.IsPaid" class="text-danger"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label asp-for="LoanEditViewModel.Loan.DatePaid" class="form-label"></label>
-                                            <input asp-for="LoanEditViewModel.Loan.DatePaid" class="form-control" />
-                                            <span asp-validation-for="LoanEditViewModel.Loan.DatePaid" class="text-danger"></span>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label asp-for="LoanEditViewModel.Loan.PaidBy" class="form-label"></label>
-                                            <input asp-for="LoanEditViewModel.Loan.PaidBy" class="form-control" />
-                                            <span asp-validation-for="LoanEditViewModel.Loan.PaidBy" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade show" id="nav-overdue-status" role="tabpanel" aria-labelledby="nav-overdue-status-tab">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-check">
-                                                <input asp-for="LoanEditViewModel.Loan.IsOverDue" class="form-check-input" />
-                                                <label asp-for="LoanEditViewModel.Loan.IsOverDue" class="form-check-label"></label>
-                                                <span asp-validation-for="LoanEditViewModel.Loan.IsOverDue" class="text-danger"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label asp-for="LoanEditViewModel.Loan.DaysOverDueBy" class="form-label"></label>
-                                            <input asp-for="LoanEditViewModel.Loan.DaysOverDueBy" class="form-control" />
-                                            <span asp-validation-for="LoanEditViewModel.Loan.DaysOverDueBy" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade show" id="nav-written-off-status" role="tabpanel" aria-labelledby="nav-written-off-status-tab">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-check">
-                                                <input asp-for="LoanEditViewModel.Loan.IsWrittenOff" class="form-check-input" />
-                                                <label asp-for="LoanEditViewModel.Loan.IsWrittenOff" class="form-check-label"></label>
-                                                <span asp-validation-for="LoanEditViewModel.Loan.IsWrittenOff" class="text-danger"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label asp-for="LoanEditViewModel.Loan.DateWrittenOff" class="form-label"></label>
-                                            <input asp-for="LoanEditViewModel.Loan.DateWrittenOff" class="form-control" />
-                                            <span asp-validation-for="LoanEditViewModel.Loan.DateWrittenOff" class="text-danger"></span>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label asp-for="LoanEditViewModel.Loan.WrittenOffBy" class="form-label"></label>
-                                            <input asp-for="LoanEditViewModel.Loan.WrittenOffBy" class="form-control" />
-                                            <span asp-validation-for="LoanEditViewModel.Loan.WrittenOffBy" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade show" id="nav-scrapped-off-status" role="tabpanel" aria-labelledby="nav-scrapped-off-status-tab">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-check">
-                                                <input asp-for="LoanEditViewModel.Loan.IsScrappedOff" class="form-check-input" />
-                                                <label asp-for="LoanEditViewModel.Loan.IsScrappedOff" class="form-check-label"></label>
-                                                <span asp-validation-for="LoanEditViewModel.Loan.IsScrappedOff" class="text-danger"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label asp-for="LoanEditViewModel.Loan.PercentageScrappedOff" class="form-label"></label>
-                                            <input asp-for="LoanEditViewModel.Loan.PercentageScrappedOff" class="form-control" />
-                                            <span asp-validation-for="LoanEditViewModel.Loan.PercentageScrappedOff" class="text-danger"></span>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label asp-for="LoanEditViewModel.Loan.DateScrappedOff" class="form-label"></label>
-                                            <input asp-for="LoanEditViewModel.Loan.DateScrappedOff" class="form-control" />
-                                            <span asp-validation-for="LoanEditViewModel.Loan.DateScrappedOff" class="text-danger"></span>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label asp-for="LoanEditViewModel.Loan.ScrappedOffBy" class="form-label"></label>
-                                            <input asp-for="LoanEditViewModel.Loan.ScrappedOffBy" class="form-control" />
-                                            <span asp-validation-for="LoanEditViewModel.Loan.ScrappedOffBy" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <div class="row py-2">
-                                <div class="col-md-6">
-                                    <input type="submit" value="Update" class="form-control btn btn-primary" />
-                                </div>
-                                <div class="col-md-6">
-                                    <a asp-page="Details" asp-route-ID="@Model.LoanEditViewModel.Loan.Id" class="btn btn-outline-primary w-100">Cancel</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+                </div>
             </div>
-        </div>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row py-2">
+                        <div class="col-md-6">
+                            <input type="submit" value="Update" class="form-control btn btn-primary" />
+                        </div>
+                        <div class="col-md-6">
+                            <a asp-page="Details" asp-route-ID="@Model.LoanEditViewModel.Loan.Id" class="btn btn-outline-primary w-100">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
-    <!-- /.container-fluid -->
 </div>
-<!-- /.content -->
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    }
+}

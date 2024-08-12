@@ -5,153 +5,116 @@
     ViewData["Title"] = "Create Loan";
     ViewData["Path"] = Request.Path;
 }
-<!-- Main content -->
-<div class="content">
-    <div class="container-fluid">
-        <div class="row row-cols-md-2">
-            <div class="col-md-4">
-                <ul class="list-group mb-3">
-                    @if (Model.BorrowerId.HasValue)
-                    {
-                        <li class="list-group-item">
-                            <a asp-page="/Borrowers/Details" asp-route-ID="@Model.BorrowerId" class="text-decoration-none fs-6 fw-light">Back to @(Model.LoanCreateViewModel.Loan.Borrower!.FirstName) @(Model.LoanCreateViewModel.Loan.Borrower!.LastName)'s details</a>
-                        </li>
-                    }
-                    <li class="list-group-item">
-                        <a asp-page="Index" class="text-decoration-none fs-6 fw-light">Back to loans</a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="#borrower" class="text-decoration-none fs-6 fw-light">Borrower</a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="#loan" class="text-decoration-none fs-6 fw-light">Loan</a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="#payment" class="text-decoration-none fs-6 fw-light">Payment</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-md-8">
-                <form method="post">
-                    <div class="row">
-                        <div class="col-12">
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        </div>
-                    </div>
-                    <div id="borrower" class="card card-primary card-outline mb-3">
-                        <div class="card-header bg-white">
-                            <h2 class="card-title h4 fw-lighter">Borrower</h2>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-8 col-md-10">
-                                    <label asp-for="LoanCreateViewModel.Loan.Borrower" class="form-label"></label>
-                                    <select asp-for="LoanCreateViewModel.BorrowerId" asp-items="@Model.Borrowers" data-placeholder="Choose a borrower" class="form-select select-field">
-                                    </select>
-                                    <span asp-validation-for="LoanCreateViewModel.Loan.Borrower" class="text-danger"></span>
-                                </div>
-                                <div class="col-4 col-md-2 d-flex align-items-end">
-                                    <a asp-page="/Borrowers/Create" asp-route-ReturnURL="/Loans/Create" class="save-state-trigger text-decoration-none fs-6 fw-light">Add new borrower</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="loan" class="card mb-3">
-                        <div class="card-header bg-white">
-                            <div>
-                                <h2 class="card-title h4 fw-lighter">
-                                    Loan
-                                </h2>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <label asp-for="LoanCreateViewModel.Loan.DateOpened" class="form-label"></label>
-                                    <input asp-for="LoanCreateViewModel.Loan.DateOpened" class="form-control" />
-                                    <span asp-validation-for="LoanCreateViewModel.Loan.DateOpened" class="text-danger"></span>
-                                </div>
-                                <div class="col-md-12">
-                                    <label asp-for="LoanCreateViewModel.Loan.Principal" class="form-label"></label>
-                                    <input asp-for="LoanCreateViewModel.Loan.Principal" class="form-control" />
-                                    <span asp-validation-for="LoanCreateViewModel.Loan.Principal" class="text-danger"></span>
-                                </div>
-                                <div class="col-md-6">
-                                    <label asp-for="LoanCreateViewModel.Loan.DurationInDays" class="form-label"></label>
-                                    <input asp-for="LoanCreateViewModel.Loan.DurationInDays" class="form-control" />
-                                    <span asp-validation-for="LoanCreateViewModel.Loan.DurationInDays" class="text-danger"></span>
-                                </div>
-                                <div class="col-md-6">
-                                    <label asp-for="LoanCreateViewModel.Loan.InterestRate" class="form-label"></label>
-                                    <input asp-for="LoanCreateViewModel.Loan.InterestRate" class="form-control" />
-                                    <span asp-validation-for="LoanCreateViewModel.Loan.InterestRate" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="payment" class="card mb-3">
-                        <div class="card-header bg-white">
-                            <h2 class="card-title h4 fw-lighter">Payment</h2>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12 col-md-6">
-                                    <label asp-for="LoanCreateViewModel.Loan.AmountPerInstallment" class="form-label"></label>
-                                    <input asp-for="LoanCreateViewModel.Loan.AmountPerInstallment" class="form-control" />
-                                    <span asp-validation-for="LoanCreateViewModel.Loan.AmountPerInstallment" class="text-danger"></span>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <label asp-for="LoanCreateViewModel.Loan.NumberOfInstallments" class="form-label"></label>
-                                    <input asp-for="LoanCreateViewModel.Loan.NumberOfInstallments" class="form-control" />
-                                    <span asp-validation-for="LoanCreateViewModel.Loan.NumberOfInstallments" class="text-danger"></span>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <label asp-for="LoanCreateViewModel.Loan.PercentagePenaltyFeePerDayOverDue" class="form-label"></label>
-                                    <input asp-for="LoanCreateViewModel.Loan.PercentagePenaltyFeePerDayOverDue" class="form-control" />
-                                    <span asp-validation-for="LoanCreateViewModel.Loan.PercentagePenaltyFeePerDayOverDue" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <div class="row py-2 gap-2 gap-md-0">
-                                <div class="col-md-6">
-                                    <input type="submit" value="Create" class="form-control btn btn-primary" />
-                                </div>
-                                <div class="col-md-6">
 
-                                    @if (Model.BorrowerId is not null)
-                                    {
-                                        <a asp-page="/Borrowers/Details" asp-route-ID="@Model.BorrowerId" class="btn btn-outline-primary w-100">Cancel</a>
-                                    }
-                                    else
-                                    {
-                                        <a asp-page="Index" class="save-state-trigger btn btn-outline-primary w-100">Cancel</a>
-                                    }
-                                </div>
-                            </div>
+<div class="row row-cols-md-2 justify-content-center align-items-start">
+    <div class="col-md-10">
+        <form method="post">
+            <div class="row">
+                <div class="col-12">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                </div>
+            </div>
+            <div id="borrower" class="card card-primary card-outline mb-3">
+                <div class="card-header bg-white">
+                    <h2 class="card-title h4 fw-lighter">Borrower</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-8 col-md-10">
+                            <label asp-for="LoanCreateViewModel.Loan.Borrower" class="form-label"></label>
+                            <select asp-for="LoanCreateViewModel.BorrowerId" asp-items="@Model.Borrowers" data-placeholder="Choose a borrower" class="form-select select-field">
+                            </select>
+                            <span asp-validation-for="LoanCreateViewModel.Loan.Borrower" class="text-danger"></span>
+                        </div>
+                        <div class="col-4 col-md-2 d-flex align-items-end">
+                            <a asp-page="/Borrowers/Create" asp-route-ReturnURL="/Loans/Create" class="save-state-trigger text-decoration-none fs-6 fw-light">Add new borrower</a>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
-        </div>
+            <div id="loan" class="card mb-3">
+                <div class="card-header bg-white">
+                    <div>
+                        <h2 class="card-title h4 fw-lighter">
+                            Loan
+                        </h2>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label asp-for="LoanCreateViewModel.Loan.DateOpened" class="form-label"></label>
+                            <input asp-for="LoanCreateViewModel.Loan.DateOpened" class="form-control" />
+                            <span asp-validation-for="LoanCreateViewModel.Loan.DateOpened" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-12">
+                            <label asp-for="LoanCreateViewModel.Loan.Principal" class="form-label"></label>
+                            <input asp-for="LoanCreateViewModel.Loan.Principal" class="form-control" />
+                            <span asp-validation-for="LoanCreateViewModel.Loan.Principal" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="LoanCreateViewModel.Loan.DurationInDays" class="form-label"></label>
+                            <input asp-for="LoanCreateViewModel.Loan.DurationInDays" class="form-control" />
+                            <span asp-validation-for="LoanCreateViewModel.Loan.DurationInDays" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="LoanCreateViewModel.Loan.InterestRate" class="form-label"></label>
+                            <input asp-for="LoanCreateViewModel.Loan.InterestRate" class="form-control" />
+                            <span asp-validation-for="LoanCreateViewModel.Loan.InterestRate" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="payment" class="card mb-3">
+                <div class="card-header bg-white">
+                    <h2 class="card-title h4 fw-lighter">Payment</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <label asp-for="LoanCreateViewModel.Loan.AmountPerInstallment" class="form-label"></label>
+                            <input asp-for="LoanCreateViewModel.Loan.AmountPerInstallment" class="form-control" />
+                            <span asp-validation-for="LoanCreateViewModel.Loan.AmountPerInstallment" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label asp-for="LoanCreateViewModel.Loan.NumberOfInstallments" class="form-label"></label>
+                            <input asp-for="LoanCreateViewModel.Loan.NumberOfInstallments" class="form-control" />
+                            <span asp-validation-for="LoanCreateViewModel.Loan.NumberOfInstallments" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label asp-for="LoanCreateViewModel.Loan.PercentagePenaltyFeePerDayOverDue" class="form-label"></label>
+                            <input asp-for="LoanCreateViewModel.Loan.PercentagePenaltyFeePerDayOverDue" class="form-control" />
+                            <span asp-validation-for="LoanCreateViewModel.Loan.PercentagePenaltyFeePerDayOverDue" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row py-2 gap-2 gap-md-0">
+                        <div class="col-md-6">
+                            <input type="submit" value="Create" class="form-control btn btn-primary" />
+                        </div>
+                        <div class="col-md-6">
+
+                            @if (Model.BorrowerId is not null)
+                            {
+                                <a asp-page="/Borrowers/Details" asp-route-ID="@Model.BorrowerId" class="btn btn-outline-primary w-100">Cancel</a>
+                            }
+                            else
+                            {
+                                <a asp-page="Index" class="save-state-trigger btn btn-outline-primary w-100">Cancel</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
-    <!-- /.container-fluid -->
 </div>
-<!-- /.content -->
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    @*    <script>
-        $('.select-field').select2({
-            theme: "bootstrap-5",
-            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-            placeholder: $(this).data('placeholder'),
-            allowClear: true
-        });
-    </script>*@
-    <script src="~/js/createLoanPageState.js"></script>
-    <script src="~/js/createLoanPageAutocompletion.js"></script>
 }
